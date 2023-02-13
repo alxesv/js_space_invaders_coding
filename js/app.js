@@ -5,7 +5,7 @@ function inRange(x, min, max) {
 let htmlGrille;
 let aliens = [];
 const timeRate = 1000;
-
+let vaisseau = 390;
 function initGame() {
     for (let i = 0; i < 400; i++) {
         let div = document.createElement('div');
@@ -22,9 +22,39 @@ function initGame() {
             aliens.push(i);
         }
     }
-    htmlGrille[390].classList.add('tireur');
+    htmlGrille[vaisseau].classList.add('tireur');
     updateGrid();
 }
+
+document.addEventListener('keydown', (e) => {
+    switch (e.key) {
+        case 'ArrowRight':
+            //rigth
+            if (htmlGrille[vaisseau].getAttribute('data') !== 'right') {
+                vaisseau += 1;
+            }
+            break;
+        case 'ArrowLeft':
+            //left
+            if (htmlGrille[vaisseau].getAttribute('data') !== 'left')
+                vaisseau -= 1;
+            break;
+        case 'ArrowUp':
+            if (vaisseau > htmlGrille.length - 60) {
+                vaisseau -= 20;
+            }
+            break;
+        case 'ArrowDown':
+            //up
+            if (!inRange(vaisseau, 379, 399)) {
+                vaisseau += 20;
+            }
+            break;
+        default:
+            break;
+    }
+    updateGrid();
+});
 
 function updateGrid() {
     for (let alien of aliens) {
@@ -33,6 +63,11 @@ function updateGrid() {
     for (let i = 0; i < htmlGrille.length; i++) {
         if (!aliens.includes(i)) {
             htmlGrille[i].classList.remove('alien');
+        }
+        if (i === vaisseau) {
+            htmlGrille[vaisseau].classList.add('tireur');
+        } else {
+            htmlGrille[i].classList.remove('tireur');
         }
     }
 }
@@ -72,7 +107,6 @@ async function gameLoop() {
             border = false;
         }
         await timer(timeRate);
-        console.log(alienDir);
         updateGrid();
     }
 }

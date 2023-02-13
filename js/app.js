@@ -30,23 +30,30 @@ document.addEventListener('keydown', (e) => {
     switch (e.key) {
         case 'ArrowRight':
             //rigth
+            e.preventDefault();
+
             if (htmlGrille[vaisseau].getAttribute('data') !== 'right') {
                 vaisseau += 1;
             }
             break;
         case 'ArrowLeft':
             //left
+            e.preventDefault();
+
             if (htmlGrille[vaisseau].getAttribute('data') !== 'left')
                 vaisseau -= 1;
             break;
         case 'ArrowUp':
+            e.preventDefault();
+
             if (vaisseau > htmlGrille.length - 60) {
                 vaisseau -= 20;
             }
             break;
         case 'ArrowDown':
             //up
-            if (!inRange(vaisseau, 379, 399)) {
+            e.preventDefault();
+            if (!inRange(vaisseau, 380, 399)) {
                 vaisseau += 20;
             }
             break;

@@ -4,7 +4,7 @@ function inRange(x, min, max) {
 
 let htmlGrille;
 let aliens = [];
-const timeRate = 1000;
+const timeRate = 50;
 let vaisseau = 390;
 
 
@@ -92,13 +92,14 @@ function moveAliens(right, step) {
 }
 
 function checkGameOver(){
+    const lastLine = Array.from({length: 20}, (_, k) => k + 380);
     let result = document.querySelector('.result');
     let result_message = document.querySelector('.result_message');
     if(aliens.length === 0){
         result_message.innerHTML = 'You Win';
         result.style.display = 'block';
         return true;
-    }else if (aliens.includes(vaisseau)){
+    }else if (aliens.includes(vaisseau) || lastLine.some(num => aliens.includes(num))){
         result_message.innerHTML = 'You Lose';
         result.style.display = 'block';
         return true;

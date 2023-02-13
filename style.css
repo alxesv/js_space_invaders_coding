@@ -1,4 +1,9 @@
-
+body {
+    background: url('ressources/background.jpg') no-repeat center center;
+}
+h3 {
+    color: #fff;
+}
 .grille {
     display: flex;
     flex-wrap: wrap;

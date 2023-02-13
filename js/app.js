@@ -49,6 +49,15 @@ function moveAliens(right, step){
     }
 }
 
+function checkWin(){
+    let result = document.querySelector('.result');
+    let result_message = document.querySelector('.result_message');
+    if(aliens.length === 0){
+        result_message.innerHTML = 'You Win';
+        result.style.display = 'block';
+    }
+}
+
 async function gameLoop(){
     let alienDir = true;
     let border = false;
@@ -74,8 +83,8 @@ async function gameLoop(){
             border = false;
         }        
         await timer(timeRate);
-        console.log(alienDir)
-        updateGrid(); 
+        updateGrid();
+        checkWin();
     }
 }
 

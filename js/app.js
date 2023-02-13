@@ -1,5 +1,5 @@
 function inRange(x, min, max) {
-    return ((x-min)*(x-max) <= 0);
+    return (x - min) * (x - max) <= 0;
 }
 
 let htmlGrille;
@@ -7,19 +7,20 @@ let aliens = [];
 const timeRate = 1000;
 let vaisseau = 390;
 
+
 function initGame(){
     for(let i = 0; i < 400; i ++){
         let div = document.createElement('div');
-        if (i % 20 === 0){
+        if (i % 20 === 0) {
             div.setAttribute('data', 'left');
-        }else if(i % 20 === 19){
+        } else if (i % 20 === 19) {
             div.setAttribute('data', 'right');
         }
         document.querySelector('.grille').append(div);
     }
     htmlGrille = document.querySelectorAll('.grille div');
-    for (i = 0; i < 60; i++){
-        if(inRange(i, 4, 15) || inRange(i, 24, 35) || inRange(i, 44, 55)){
+    for (i = 0; i < 60; i++) {
+        if (inRange(i, 4, 15) || inRange(i, 24, 35) || inRange(i, 44, 55)) {
             aliens.push(i);
         }
     }
@@ -27,25 +28,58 @@ function initGame(){
     updateGrid();
 }
 
+document.addEventListener('keydown', (e) => {
+    switch (e.key) {
+        case 'ArrowRight':
+            //rigth
+            if (htmlGrille[vaisseau].getAttribute('data') !== 'right') {
+                vaisseau += 1;
+            }
+            break;
+        case 'ArrowLeft':
+            //left
+            if (htmlGrille[vaisseau].getAttribute('data') !== 'left')
+                vaisseau -= 1;
+            break;
+        case 'ArrowUp':
+            if (vaisseau > htmlGrille.length - 60) {
+                vaisseau -= 20;
+            }
+            break;
+        case 'ArrowDown':
+            //up
+            if (!inRange(vaisseau, 379, 399)) {
+                vaisseau += 20;
+            }
+            break;
+        default:
+            break;
+    }
+    updateGrid();
+});
 
-function updateGrid(){
-    for (let alien of aliens){
+function updateGrid() {
+    for (let alien of aliens) {
         htmlGrille[alien].classList.add('alien');
     }
-    for (let i = 0; i < htmlGrille.length; i++){
-        if(!aliens.includes(i)){
+    for (let i = 0; i < htmlGrille.length; i++) {
+        if (!aliens.includes(i)) {
             htmlGrille[i].classList.remove('alien');
+        }
+        if (i === vaisseau) {
+            htmlGrille[vaisseau].classList.add('tireur');
+        } else {
+            htmlGrille[i].classList.remove('tireur');
         }
     }
 }
 
-function moveAliens(right, step){
-    for (let i = 0; i < aliens.length; i++){
-        if(right){
-            aliens[i]+=step;
-        }
-        else{
-            aliens[i]-=step;
+function moveAliens(right, step) {
+    for (let i = 0; i < aliens.length; i++) {
+        if (right) {
+            aliens[i] += step;
+        } else {
+            aliens[i] -= step;
         }
     }
 }
@@ -75,19 +109,19 @@ async function gameLoop(){
             if(htmlGrille[alien].getAttribute('data') == 'right'){
                 alienDir = false;
                 border = true;
-            }else if (htmlGrille[alien].getAttribute('data') == 'left'){
+            } else if (htmlGrille[alien].getAttribute('data') == 'left') {
                 alienDir = true;
                 border = true;
             }
         }
-        if(border && !skipBorder){
+        if (border && !skipBorder) {
             moveAliens(true, 20);
             skipBorder = true;
-        }else{
+        } else {
             moveAliens(alienDir, 1);
             skipBorder = false;
             border = false;
-        }        
+        }
         await timer(timeRate);
         updateGrid();
     }

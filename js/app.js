@@ -1,21 +1,7 @@
-class Alien {
-    position;
-    direction;
-    constructor(position, direction) {
-        this.position = position;
-        this.direction = direction;
-    }
-}
-class Vaisseau {
-    position;
-    constructor(position) {
-        this.position = position;
-    }
-}
-
 function inRange(x, min, max) {
     return ((x-min)*(x-max) <= 0);
 }
+
 let grille = document.querySelector('.grille');
 let gameGrille = [];
 for(let i = 0; i < 400; i ++){
@@ -36,5 +22,5 @@ function initGame(){
     gameGrille[shipStart] = new Vaisseau(shipStart);
 
 };
+
 initGame();
-console.log(gameGrille);

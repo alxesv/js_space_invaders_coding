@@ -50,3 +50,19 @@ h3 {
 .laser {
     background-color: orange;
 }
+.result {
+    width: 150px;
+    height: 100px;
+    background-color: antiquewhite;
+    border-radius: 4px;
+    font-size: 1.5rem;
+    padding: 5px;
+    position: absolute;
+    top: 40%;
+    left: 80%;
+    display: none;
+    text-align: center;
+}
+.result .btn {
+    margin-top: 20px;
+}

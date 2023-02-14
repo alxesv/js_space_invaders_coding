@@ -146,6 +146,7 @@ document.addEventListener('keydown', (e) => {
                     htmlGrille[laser].classList.remove('laser');
                     laser -= 20;
                     htmlGrille[laser].classList.add('laser');
+                    updateGrid();
                 }, 100)
                 cooldown = true;
             }else{

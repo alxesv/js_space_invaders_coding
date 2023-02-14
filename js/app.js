@@ -14,6 +14,10 @@ let bombs;
 let diff;
 // game state
 let gameOn = false;
+let bombDisplay = document.querySelector('#bombs_left');
+// wait function
+const timer = (ms) => new Promise((res) => setTimeout(res, ms));
+
 
 function inRange(x, min, max) {
     return (x - min) * (x - max) <= 0;
@@ -86,7 +90,6 @@ async function gameLoop() {
     let alienDir = true;
     let border = false;
     let skipBorder = false;
-    const timer = (ms) => new Promise((res) => setTimeout(res, ms));
     while (!checkGameOver()) {
         for (let alien of aliens) {
             if (htmlGrille[alien].getAttribute('data') == 'right') {
@@ -145,6 +148,7 @@ function gameStart(difficulty){
         default:
             return;
     }
+    bombDisplay.innerHTML = `(${bombs})`;
     let i = 3;
     document.querySelector('#countdown').innerHTML = '';
     document.querySelector('#countdown').style.display = 'block';

@@ -10,7 +10,7 @@ function moveAliens(right, step) {
 }
 
 // Tir des aliens et mort du vaisseau
-async function enemyShoot(){
+function enemyShoot(){
     let randomAlien = aliens[Math.floor(Math.random() * aliens.length)];
     let laser = randomAlien + 20;
     let laserInterval = setInterval(() => {
@@ -39,7 +39,7 @@ async function enemyShoot(){
 }
 
 // Tir du vaisseau et mort des aliens
-async function shoot(type=1){
+function shoot(type=1){
     if (!cooldown) {
         if(type === 2 && bombs > 0){
             let bomb = vaisseau-20;
@@ -77,6 +77,7 @@ async function shoot(type=1){
                 updateGrid();
             }, 300);
             bombs--;
+            bombDisplay.innerHTML = `(${bombs})`;
         }else if(type === 1){
             let laser = vaisseau-20;
             let laserInterval = setInterval(() => {

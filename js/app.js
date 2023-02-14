@@ -92,9 +92,12 @@ async function enemyShoot(){
             dead = true;
             return;
         }
-        if (laser > 380) {
+        if (laser >= 380 && laser < 400) {
             clearInterval(laserInterval)
             htmlGrille[laser].classList.remove('enemy_laser');
+            return;
+        }else if (laser > 400) {
+            clearInterval(laserInterval)
             return;
         }
         htmlGrille[laser].classList.remove('enemy_laser');

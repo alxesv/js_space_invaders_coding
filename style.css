@@ -38,6 +38,11 @@ h3 {
     background-position: center;
     background-size: contain;
 }
+.enemy_laser {
+    background: url(ressources/enemy_laser.png);
+    background-position: center;
+    background-size: cover;
+}
 .alien {
     background: url(ressources/ennemies.png);
     background-position: center;
@@ -73,4 +78,18 @@ h3 {
 }
 .result .btn {
     margin-top: 20px;
+}
+.game{
+    display: none;
+}
+.diff_choice{
+    display: flex;
+    justify-content: center;
+}
+.diff_choice div{
+    display: inline-block;
+    background-color: antiquewhite;
+    padding: 10px;
+    border-radius: 4px;
+    text-align: center;
 }

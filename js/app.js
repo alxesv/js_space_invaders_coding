@@ -140,9 +140,8 @@ initGame();
 gameLoop();
 btnReplay.addEventListener('click', () => {
     vaisseau = 390;
-    for (let i = 0; i < aliens.length; i++) {
-        aliens = [];
-    }
+    aliens = [];
+
     while (document.querySelector('.grille').firstChild) {
         document
             .querySelector('.grille')

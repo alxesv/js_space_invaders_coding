@@ -29,12 +29,43 @@ function initGame(){
 }
 
 document.addEventListener('keydown', (e) => {
+    if(checkGameOver()){
+        return;
+    }
     switch (e.key) {
         case ' ':
             //shoot
             e.preventDefault();
-
-            console.log('pan');
+            if (!cooldown) {
+                let laser = vaisseau-20;
+                let laserInterval = setInterval(() => {
+                    if (laser < 20) {
+                        clearInterval(laserInterval)
+                        htmlGrille[laser].classList.remove('laser');
+                        return;
+                    }
+                    if (aliens.includes(laser)) {
+                        htmlGrille[laser].classList.remove('alien');
+                        htmlGrille[laser].classList.remove('laser');
+                        htmlGrille[laser].classList.add('boom');
+                        aliens.splice(aliens.indexOf(laser), 1);
+                        clearInterval(laserInterval);
+                        setInterval(() => {
+                            htmlGrille[laser].classList.remove('boom');
+                        }, 100);
+                        return;
+                    }
+                    htmlGrille[laser].classList.remove('laser');
+                    laser -= 20;
+                    htmlGrille[laser].classList.add('laser');
+                }, 100)
+                cooldown = true;
+            }else{
+                return;
+            }
+            setTimeout(() => {
+                cooldown = false;
+            }, 100);
             break;
         case 'd':
         case 'ArrowRight':

@@ -9,8 +9,9 @@ let vaisseau = 390;
 let cooldown = false;
 let enemyFire = false;
 let dead = false;
-let bombs = 1;
-
+let bombs;
+let diff;
+let gameOn = false;
 
 function inRange(x, min, max) {
     return (x - min) * (x - max) <= 0;
@@ -68,19 +69,21 @@ function moveAliens(right, step) {
 }
 
 function checkGameOver(){
-    const lastLine = Array.from({length: 20}, (_, k) => k + 380);
-    let result = document.querySelector('.result');
-    let result_message = document.querySelector('.result_message');
-    if (aliens.length === 0) {
-        result_message.innerHTML = 'You Win';
-        result.style.display = 'block';
-        return true;
-    }else if (aliens.includes(vaisseau) || lastLine.some(num => aliens.includes(num)) || dead){
-        result_message.innerHTML = 'You Lose';
-        result.style.display = 'block';
-        return true;
+    if(gameOn){
+        const lastLine = Array.from({length: 20}, (_, k) => k + 380);
+        let result = document.querySelector('.result');
+        let result_message = document.querySelector('.result_message');
+        if (aliens.length === 0) {
+            result_message.innerHTML = 'You Win';
+            result.style.display = 'block';
+            return true;
+        }else if (aliens.includes(vaisseau) || lastLine.some(num => aliens.includes(num)) || dead){
+            result_message.innerHTML = 'You Lose';
+            result.style.display = 'block';
+            return true;
+        }
     }
-    return false;
+        return false;
 }
 
 async function enemyShoot(){
@@ -220,24 +223,46 @@ function gameStart(difficulty){
     document.querySelector('.game').style.display = 'block';
     switch(difficulty){
         case 1:
+            diff = 1;
+            enemyFire = false;
             timeRate = 1000;
+            bombs = 3;
             break;
         case 2:
+            diff = 2;
+            enemyFire = false;
             timeRate = 600;
+            bombs = 2;
             break;
         case 3:
+            diff = 3;
             enemyFire = true;
             timeRate = 600;
+            bombs = 1;
             break;
         case 4:
+            diff = 4;
             enemyFire = true;
             timeRate = 300;
+            bombs = 0;
             break;
         default:
             return;
     }
-    initGame();
-    gameLoop();
+    let i = 3;
+    document.querySelector('#countdown').innerHTML = '';
+    document.querySelector('#countdown').style.display = 'block';
+    let startInterval = setInterval(() => {
+        if(i === 0){
+            initGame();
+            gameLoop();
+            gameOn = true;
+            clearInterval(startInterval);
+            document.querySelector('#countdown').style.display = 'none';
+        }
+        document.querySelector('#countdown').innerHTML = i;
+        i--
+    }, 1000);
 }
 
 document.querySelectorAll('.diff_choice button').forEach((button) => {
@@ -262,6 +287,7 @@ document.querySelectorAll('.diff_choice button').forEach((button) => {
 });
 
 document.querySelector('#replay').addEventListener('click', () => {
+    gameOn = false;
     vaisseau = 390;
     aliens = [];
     dead = false;
@@ -274,12 +300,12 @@ document.querySelector('#replay').addEventListener('click', () => {
     let result_message = document.querySelector('.result_message');
     result_message.innerHTML = '';
     result.style.display = 'none';
-    initGame();
-    gameLoop();
+    document.querySelector('.diff_choice').style.display = 'flex';
+    document.querySelector('.game').style.display = 'none';
 });
 
 document.addEventListener('keydown', (e) => {
-    if(checkGameOver()){
+    if(checkGameOver() || !gameOn){
         return;
     }
     switch (e.key) {

@@ -36,6 +36,7 @@ document.addEventListener('keydown', (e) => {
 
             console.log('pan');
             break;
+        case 'd':
         case 'ArrowRight':
             //rigth
             e.preventDefault();
@@ -44,6 +45,7 @@ document.addEventListener('keydown', (e) => {
                 vaisseau += 1;
             }
             break;
+        case 'q':
         case 'ArrowLeft':
             //left
             e.preventDefault();
@@ -51,6 +53,7 @@ document.addEventListener('keydown', (e) => {
             if (htmlGrille[vaisseau].getAttribute('data') !== 'left')
                 vaisseau -= 1;
             break;
+        case 'z':
         case 'ArrowUp':
             e.preventDefault();
 
@@ -58,6 +61,7 @@ document.addEventListener('keydown', (e) => {
                 vaisseau -= 20;
             }
             break;
+        case 's':
         case 'ArrowDown':
             //up
             e.preventDefault();

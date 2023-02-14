@@ -4,9 +4,9 @@ function inRange(x, min, max) {
 
 let htmlGrille;
 let aliens = [];
-const timeRate = 50;
+const timeRate = 100;
 let vaisseau = 390;
-
+let cooldown = false;
 
 function initGame(){
     for(let i = 0; i < 400; i ++){
@@ -30,6 +30,12 @@ function initGame(){
 
 document.addEventListener('keydown', (e) => {
     switch (e.key) {
+        case ' ':
+            //shoot
+            e.preventDefault();
+
+            console.log('pan');
+            break;
         case 'ArrowRight':
             //rigth
             e.preventDefault();

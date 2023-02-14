@@ -93,3 +93,11 @@ h3 {
     border-radius: 4px;
     text-align: center;
 }
+#countdown {
+    display: none;
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    color: chartreuse;
+    font-size: 2rem;
+}

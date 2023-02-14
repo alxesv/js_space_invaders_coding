@@ -86,11 +86,11 @@ async function shoot(){
                 htmlGrille[laser].classList.remove('alien');
                 htmlGrille[laser].classList.remove('laser');
                 htmlGrille[laser].classList.add('boom');
-                aliens.splice(aliens.indexOf(laser), 1);
-                clearInterval(laserInterval);
                 setInterval(() => {
                     htmlGrille[laser].classList.remove('boom');
-                }, 100);
+                }, 200);
+                aliens.splice(aliens.indexOf(laser), 1);
+                clearInterval(laserInterval);
                 return;
             }
             htmlGrille[laser].classList.remove('laser');

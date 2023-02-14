@@ -43,11 +43,15 @@ h3 {
     background-position: center;
     background-size: contain;
 }
-.boom {
-    background-color: red;
-}
 .laser {
-    background-color: orange;
+    background: url(ressources/laser.png);
+    background-position: center;
+    background-size: cover;
+}
+.boom {
+    background: url(ressources/boom.png);
+    background-position: center;
+    background-size: cover;
 }
 .result {
     width: 150px;

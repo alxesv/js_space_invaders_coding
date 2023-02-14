@@ -6,6 +6,7 @@ let htmlGrille;
 let aliens = [];
 const timeRate = 100;
 let vaisseau = 390;
+let btnReplay = document.querySelector('.btn');
 let cooldown = false;
 
 function initGame(){
@@ -132,11 +133,12 @@ function moveAliens(right, step) {
     }
 }
 
+
 function checkGameOver(){
     const lastLine = Array.from({length: 20}, (_, k) => k + 380);
     let result = document.querySelector('.result');
     let result_message = document.querySelector('.result_message');
-    if(aliens.length === 0){
+    if (aliens.length === 0) {
         result_message.innerHTML = 'You Win';
         result.style.display = 'block';
         return true;
@@ -148,14 +150,14 @@ function checkGameOver(){
     return false;
 }
 
-async function gameLoop(){
+async function gameLoop() {
     let alienDir = true;
     let border = false;
     let skipBorder = false;
-    const timer = ms => new Promise(res => setTimeout(res, ms));
-    while(!checkGameOver()){
-        for (let alien of aliens){
-            if(htmlGrille[alien].getAttribute('data') == 'right'){
+    const timer = (ms) => new Promise((res) => setTimeout(res, ms));
+    while (!checkGameOver()) {
+        for (let alien of aliens) {
+            if (htmlGrille[alien].getAttribute('data') == 'right') {
                 alienDir = false;
                 border = true;
             } else if (htmlGrille[alien].getAttribute('data') == 'left') {
@@ -178,3 +180,19 @@ async function gameLoop(){
 
 initGame();
 gameLoop();
+btnReplay.addEventListener('click', () => {
+    vaisseau = 390;
+    aliens = [];
+
+    while (document.querySelector('.grille').firstChild) {
+        document
+            .querySelector('.grille')
+            .removeChild(document.querySelector('.grille').lastChild);
+    }
+    let result = document.querySelector('.result');
+    let result_message = document.querySelector('.result_message');
+    result_message.innerHTML = '';
+    result.style.display = 'none';
+    initGame();
+    gameLoop();
+});

@@ -3,10 +3,11 @@ let aliens = [];
 // speed of the aliens (in ms), the lower the faster
 const timeRate = 1000;
 // cooldown between each shot (in ms), the lower the faster
-const cooldownRate = 500;
+const cooldownRate = 1000;
 // initial position of the player
 let vaisseau = 390;
 let cooldown = false;
+let bombs = 0;
 
 function inRange(x, min, max) {
     return (x - min) * (x - max) <= 0;
@@ -73,32 +74,82 @@ function checkGameOver(){
     }
     return false;
 }
-async function shoot(){
+async function shoot(type=1){
     if (!cooldown) {
-        let laser = vaisseau-20;
-        let laserInterval = setInterval(() => {
-            if (laser < 20) {
-                clearInterval(laserInterval)
+        if(type === 2 && bombs > 0){
+            let bomb = vaisseau-20;
+            let bombInterval = setInterval(() => {
+                if (bomb < 20) {
+                    clearInterval(bombInterval)
+                    htmlGrille[bomb].classList.remove('bomb');
+                    return;
+                }
+                if (aliens.includes(bomb)) {
+                    // fix last alien being killed
+                    htmlGrille[bomb].classList.remove('bomb');
+                    htmlGrille[bomb].classList.add('boom');
+                    htmlGrille[bomb+1].classList.add('boom');
+                    htmlGrille[bomb-1].classList.add('boom');
+                    htmlGrille[bomb+20].classList.add('boom');
+                    htmlGrille[bomb-20].classList.add('boom');
+                    setInterval(() => {
+                        htmlGrille[bomb].classList.remove('boom');
+                        htmlGrille[bomb+1].classList.remove('boom');
+                        htmlGrille[bomb-1].classList.remove('boom');
+                        htmlGrille[bomb+20].classList.remove('boom');
+                        htmlGrille[bomb-20].classList.remove('boom');
+                    }, 200);
+                    aliens.splice(aliens.indexOf(bomb), 1);
+                    if(aliens.includes(bomb+1)){
+                    aliens.splice(aliens.indexOf(bomb+1), 1);
+                    }
+                    if(aliens.includes(bomb-1)){
+                    aliens.splice(aliens.indexOf(bomb-1), 1);
+                    }
+                    if(aliens.includes(bomb+20)){
+                    aliens.splice(aliens.indexOf(bomb+20), 1);
+                    }
+                    if(aliens.includes(bomb-20)){
+                    aliens.splice(aliens.indexOf(bomb-20), 1);
+                    }
+                    clearInterval(bombInterval);
+                    updateGrid();
+                    return;
+                }
+                htmlGrille[bomb].classList.remove('bomb');
+                bomb -= 20;
+                htmlGrille[bomb].classList.add('bomb');
+                updateGrid();
+            }, 300);
+            bombs--;
+        }else if(type === 1){
+            let laser = vaisseau-20;
+            let laserInterval = setInterval(() => {
+                if (laser < 20) {
+                    clearInterval(laserInterval)
+                    htmlGrille[laser].classList.remove('laser');
+                    return;
+                }
+                if (aliens.includes(laser)) {
+                    htmlGrille[laser].classList.remove('laser');
+                    htmlGrille[laser].classList.add('boom');
+                    setInterval(() => {
+                        htmlGrille[laser].classList.remove('boom');
+                    }, 200);
+                    aliens.splice(aliens.indexOf(laser), 1);
+                    clearInterval(laserInterval);
+                    updateGrid();
+                    return;
+                }
                 htmlGrille[laser].classList.remove('laser');
-                return;
-            }
-            if (aliens.includes(laser)) {
-                htmlGrille[laser].classList.remove('alien');
-                htmlGrille[laser].classList.remove('laser');
-                htmlGrille[laser].classList.add('boom');
-                setInterval(() => {
-                    htmlGrille[laser].classList.remove('boom');
-                }, 200);
-                aliens.splice(aliens.indexOf(laser), 1);
-                clearInterval(laserInterval);
-                return;
-            }
-            htmlGrille[laser].classList.remove('laser');
-            laser -= 20;
-            htmlGrille[laser].classList.add('laser');
-            updateGrid();
-        }, 100)
-        cooldown = true;
+                laser -= 20;
+                htmlGrille[laser].classList.add('laser');
+                updateGrid();
+            }, 100)
+    }else{
+        return;
+    }
+    cooldown = true;
     }else{
         return;
     }
@@ -155,6 +206,11 @@ document.addEventListener('keydown', (e) => {
         return;
     }
     switch (e.key) {
+        case 'Control':
+            //bomb
+            e.preventDefault();
+            shoot(2);
+            break;
         case ' ':
             //shoot
             e.preventDefault();

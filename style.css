@@ -1,9 +1,7 @@
 body {
     background: url('ressources/background.jpg') no-repeat center center;
 }
-h3 {
-    color: #fff;
-}
+
 .grille {
     display: flex;
     flex-wrap: wrap;
@@ -28,6 +26,7 @@ h3 {
 h3 {
     text-align: center;
     margin: 20px 0;
+    color: #fff;
 }
 .grille div {
     width: 25px;

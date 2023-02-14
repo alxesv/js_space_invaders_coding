@@ -58,6 +58,11 @@ h3 {
     background-position: center;
     background-size: cover;
 }
+.bomb {
+    background: url(ressources/bomb.png);
+    background-position: center;
+    background-size: cover;
+}
 .result {
     width: 150px;
     height: 100px;

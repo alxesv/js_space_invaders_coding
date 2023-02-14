@@ -1,7 +1,10 @@
 let htmlGrille;
 let aliens = [];
+// speed of the aliens (in ms), the lower the faster
 const timeRate = 1000;
+// cooldown between each shot (in ms), the lower the faster
 const cooldownRate = 500;
+// initial position of the player
 let vaisseau = 390;
 let cooldown = false;
 
@@ -70,7 +73,39 @@ function checkGameOver(){
     }
     return false;
 }
-
+async function shoot(){
+    if (!cooldown) {
+        let laser = vaisseau-20;
+        let laserInterval = setInterval(() => {
+            if (laser < 20) {
+                clearInterval(laserInterval)
+                htmlGrille[laser].classList.remove('laser');
+                return;
+            }
+            if (aliens.includes(laser)) {
+                htmlGrille[laser].classList.remove('alien');
+                htmlGrille[laser].classList.remove('laser');
+                htmlGrille[laser].classList.add('boom');
+                aliens.splice(aliens.indexOf(laser), 1);
+                clearInterval(laserInterval);
+                setInterval(() => {
+                    htmlGrille[laser].classList.remove('boom');
+                }, 100);
+                return;
+            }
+            htmlGrille[laser].classList.remove('laser');
+            laser -= 20;
+            htmlGrille[laser].classList.add('laser');
+            updateGrid();
+        }, 100)
+        cooldown = true;
+    }else{
+        return;
+    }
+    setTimeout(() => {
+        cooldown = false;
+    }, cooldownRate);
+}
 async function gameLoop() {
     let alienDir = true;
     let border = false;
@@ -102,7 +137,6 @@ async function gameLoop() {
 document.querySelector('.btn').addEventListener('click', () => {
     vaisseau = 390;
     aliens = [];
-
     while (document.querySelector('.grille').firstChild) {
         document
             .querySelector('.grille')
@@ -124,37 +158,7 @@ document.addEventListener('keydown', (e) => {
         case ' ':
             //shoot
             e.preventDefault();
-            if (!cooldown) {
-                let laser = vaisseau-20;
-                let laserInterval = setInterval(() => {
-                    if (laser < 20) {
-                        clearInterval(laserInterval)
-                        htmlGrille[laser].classList.remove('laser');
-                        return;
-                    }
-                    if (aliens.includes(laser)) {
-                        htmlGrille[laser].classList.remove('alien');
-                        htmlGrille[laser].classList.remove('laser');
-                        htmlGrille[laser].classList.add('boom');
-                        aliens.splice(aliens.indexOf(laser), 1);
-                        clearInterval(laserInterval);
-                        setInterval(() => {
-                            htmlGrille[laser].classList.remove('boom');
-                        }, 100);
-                        return;
-                    }
-                    htmlGrille[laser].classList.remove('laser');
-                    laser -= 20;
-                    htmlGrille[laser].classList.add('laser');
-                    updateGrid();
-                }, 100)
-                cooldown = true;
-            }else{
-                return;
-            }
-            setTimeout(() => {
-                cooldown = false;
-            }, cooldownRate);
+            shoot();
             break;
         case 'd':
         case 'ArrowRight':

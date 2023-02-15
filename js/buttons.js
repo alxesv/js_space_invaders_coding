@@ -51,10 +51,11 @@ document.querySelector('#replay').addEventListener('click', () => {
     document.querySelector('.score').style.display = 'none';
     document.querySelector('#highscores').style.display = 'none';
     document.querySelector('.timer').style.display = 'none';
-    showAllScores();
     document.querySelector('#showSkillTree').style.display = 'block';
     document.querySelector('#hardreset').style.display = 'block';
     document.querySelector('#resetSkills').style.display = 'block';
+    showAllScores();
+    updateSkillPointsCounter();
 });
 
 // Controles

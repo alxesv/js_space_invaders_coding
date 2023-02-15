@@ -22,6 +22,7 @@ document.querySelectorAll('.diff_choice button').forEach((button) => {
 
 // Bouton replay
 document.querySelector('#replay').addEventListener('click', () => {
+    score = 0;
     gameOn = false;
     vaisseau = 390;
     aliens = [];

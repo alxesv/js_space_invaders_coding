@@ -22,9 +22,7 @@ function inRange(x, min, max) {
 // Initialisation du jeu
 function initGame() {
     document.querySelector('.score').style.display = 'block';
-    document.querySelector('.score').createElement('h3');
-    document.querySelector('.score').createTextNode(`Score : ${score}`);
-    document.querySelector('.score').replaceChild(sp1, sp2);
+
     document
         .querySelector('.score')
         .firstChild.insertAdjacentText('beforeend', ` ${score}`);
@@ -101,9 +99,7 @@ async function gameLoop() {
     const timer = (ms) => new Promise((res) => setTimeout(res, ms));
     while (!checkGameOver()) {
         console.log(score);
-        document
-            .querySelector('.score')
-            .firstChild.insertAdjacentText('beforeend', ` ${score}`);
+        updateScore();
         for (let alien of aliens) {
             if (htmlGrille[alien].getAttribute('data') == 'right') {
                 alienDir = false;

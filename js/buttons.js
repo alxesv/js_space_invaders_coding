@@ -45,6 +45,11 @@ document.addEventListener('keydown', (e) => {
         return;
     }
     switch (e.key) {
+        case 'b':
+            //bouclier
+            e.preventDefault();
+            shield();
+            break;
         case 'Control':
             //bomb
             e.preventDefault();

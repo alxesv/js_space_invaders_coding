@@ -15,6 +15,10 @@ let diff;
 // game state
 let gameOn = false;
 let bombDisplay = document.querySelector('#bombs_left');
+let shieldDisplay = document.querySelector('#shields_left');
+// is the shield active
+let shieldOn = false;
+let shields;
 // wait function
 const timer = (ms) => new Promise((res) => setTimeout(res, ms));
 
@@ -59,8 +63,13 @@ function updateGrid() {
             htmlGrille[i].classList.remove('alien');
         }
         if (i === vaisseau) {
+            if(!shieldOn){
             htmlGrille[vaisseau].classList.add('tireur');
+        }else{
+            htmlGrille[vaisseau].classList.add('shield');
+        }
         } else {
+            htmlGrille[i].classList.remove('shield');
             htmlGrille[i].classList.remove('tireur');
         }
     }
@@ -126,29 +135,42 @@ function gameStart(difficulty){
             enemyFire = false;
             timeRate = 1000;
             bombs = 3;
+            shields = 0;
             break;
         case 2:
             diff = 2;
             enemyFire = false;
             timeRate = 600;
             bombs = 2;
+            shields = 0;
             break;
         case 3:
             diff = 3;
             enemyFire = true;
             timeRate = 600;
             bombs = 1;
+            shields = 2;
             break;
         case 4:
             diff = 4;
             enemyFire = true;
             timeRate = 300;
             bombs = 0;
+            shields = 1;
             break;
         default:
             return;
     }
+    if(bombs > 0){
     bombDisplay.innerHTML = `(${bombs})`;
+    }else{
+        document.querySelector('#bomb_list').style.display = 'none';
+    }
+    if (shields > 0){
+        shieldDisplay.innerHTML = `(${shields})`;
+    }else{
+        document.querySelector('#shield_list').style.display = 'none';
+    }
     let i = 3;
     document.querySelector('#countdown').innerHTML = '';
     document.querySelector('#countdown').style.display = 'block';

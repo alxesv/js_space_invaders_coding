@@ -12,8 +12,12 @@ let dead = false;
 let bombs;
 // difficulty
 let diff;
+let stopInterval;
 // game state
 let gameOn = false;
+let scoreStorage = localStorage;
+let pointAlien = 10;
+let score = 0;
 let bombDisplay = document.querySelector('#bombs_left');
 let shieldDisplay = document.querySelector('#shields_left');
 let freezeDisplay = document.querySelector('#freeze_left');
@@ -24,14 +28,13 @@ let timeFreeze;
 let timeFreezeOn = false;
 let superShot;
 
-
 function inRange(x, min, max) {
     return (x - min) * (x - max) <= 0;
 }
-
 // Initialisation du jeu
-function initGame(){
-    for(let i = 0; i < 400; i ++){
+function initGame() {
+    document.querySelector('.score').style.display = 'block';
+    for (let i = 0; i < 400; i++) {
         let div = document.createElement('div');
         if (i % 20 === 0) {
             div.setAttribute('data', 'left');
@@ -52,7 +55,7 @@ function initGame(){
 
 // Mise à jour de la grille
 function updateGrid() {
-    if(dead){
+    if (dead) {
         htmlGrille[vaisseau].classList.remove('tireur');
         htmlGrille[vaisseau].classList.add('boom');
         return;
@@ -79,9 +82,9 @@ function updateGrid() {
 }
 
 // Vérifie si la partie est terminée
-function checkGameOver(){
-    if(gameOn){
-        const lastLine = Array.from({length: 20}, (_, k) => k + 380);
+function checkGameOver() {
+    if (gameOn) {
+        const lastLine = Array.from({ length: 20 }, (_, k) => k + 380);
         let result = document.querySelector('.result');
         let result_message = document.querySelector('.result_message');
         if (aliens.length === 0) {
@@ -91,13 +94,17 @@ function checkGameOver(){
             localStorage.setItem('skillPoints', skillPoints);
             updateSkillPointsCounter();
             return true;
-        }else if (aliens.includes(vaisseau) || lastLine.some(num => aliens.includes(num)) || dead){
+        } else if (
+            aliens.includes(vaisseau) ||
+            lastLine.some((num) => aliens.includes(num)) ||
+            dead
+        ) {
             result_message.innerHTML = 'You Lose';
             result.style.display = 'block';
             return true;
         }
     }
-        return false;
+    return false;
 }
 
 // Déplacement des aliens et boucle de jeu
@@ -123,44 +130,69 @@ function gameLoop() {
             skipBorder = false;
             border = false;
         }
-        if(enemyFire){
+        if (enemyFire) {
             enemyShoot();
         }
         if(checkGameOver()){
             clearInterval(gameInterval);
+            clearInterval(stopInterval);
+            if (aliens.length === 0) {
+                score = Math.round(
+                    (1000 / parseFloat(document.querySelector('.timer').textContent)) *
+                        score
+                );
+            }
+            checkScores(score);
         }
         updateGrid();
+        updateScore();
     }, timeRate);
 }
 
+   
+
+function timerGame() {
+    document.querySelector('.timer').style.display = 'block';
+    let startTime = Date.now();
+    const interval = setInterval(() => {
+        let time = Date.now() - startTime;
+        document.querySelector('.timer').innerHTML = (time / 1000).toFixed(2);
+    }, 100);
+    return { interval };
+}
 // Lance le jeu
-function gameStart(difficulty){
+function gameStart(difficulty) {
     document.querySelector('.diff_choice').style.display = 'none';
     document.querySelector('#showSkillTree').style.display = 'none';
     document.querySelector('#hardreset').style.display = 'none';
     document.querySelector('#resetSkills').style.display = 'none';
     document.querySelector('.game').style.display = 'block';
+
     skillTreeDiv.style.display = 'none';
     switch(difficulty){
         case 1:
             diff = 1;
             enemyFire = false;
             timeRate = 1000;
+            pointAlien = 10;
             break;
         case 2:
             diff = 2;
             enemyFire = false;
             timeRate = 600;
+            pointAlien = 15;
             break;
         case 3:
             diff = 3;
             enemyFire = true;
             timeRate = 600;
+            pointAlien = 20;
             break;
         case 4:
             diff = 4;
             enemyFire = true;
             timeRate = 300;
+            pointAlien = 30;
             break;
         default:
             return;
@@ -188,7 +220,9 @@ function gameStart(difficulty){
     document.querySelector('#countdown').innerHTML = '';
     document.querySelector('#countdown').style.display = 'block';
     let startInterval = setInterval(() => {
-        if(i === 0){
+        if (i === 0) {
+            const { interval } = timerGame();
+            stopInterval = interval;
             initGame();
             gameLoop();
             gameOn = true;
@@ -196,6 +230,6 @@ function gameStart(difficulty){
             document.querySelector('#countdown').style.display = 'none';
         }
         document.querySelector('#countdown').innerHTML = i;
-        i--
+        i--;
     }, 1000);
 }

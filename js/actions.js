@@ -63,8 +63,10 @@ async function shoot(type = 1) {
                         const pos = positionsToRemove[i];
                         htmlGrille[pos].classList.add('boom');
                         const index = aliens.indexOf(pos);
-                        if (index !== -1) {
+                        console.log(aliens[pos]);
+                        if (index !== -1 && aliens.includes(pos)) {
                             aliens.splice(index, 1);
+                            score += pointAlien;
                         }
                     }
                     setTimeout(() => {
@@ -94,7 +96,7 @@ async function shoot(type = 1) {
                 }
                 if (aliens.includes(laser)) {
                     console.log(score);
-                    score += 100;
+                    score += pointAlien;
                     htmlGrille[laser].classList.remove('laser');
                     htmlGrille[laser].classList.add('boom');
                     setTimeout(() => {

@@ -19,7 +19,17 @@ document.querySelectorAll('.diff_choice button').forEach((button) => {
         }
     });
 });
+document.querySelector('#btnScores').addEventListener('click', () => {
+    const highScores = JSON.parse(scoreStorage.getItem('scores')) ?? [];
 
+    showAllScores();
+    document.querySelector('#highscores #tab-score').style.display =
+        highScores === 0 ? 'none' : 'table';
+    document.querySelector('#highscores').style.display =
+        document.querySelector('#highscores').style.display === 'none'
+            ? 'block'
+            : 'none';
+});
 // Bouton replay
 document.querySelector('#replay').addEventListener('click', () => {
     score = 0;
@@ -38,6 +48,12 @@ document.querySelector('#replay').addEventListener('click', () => {
     result.style.display = 'none';
     document.querySelector('.diff_choice').style.display = 'flex';
     document.querySelector('.game').style.display = 'none';
+    document.querySelector('.score').style.display = 'none';
+    document.querySelector('#highscores').style.display = 'none';
+    document.querySelector('.timer').style.display = 'none';
+
+    showAllScores();
+
     // document.querySelector('.score').removeChild();
 });
 

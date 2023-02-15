@@ -21,7 +21,7 @@ function activateFreezeTime(){
         freezeDisplay.innerHTML = `(${timeFreeze})`;
         setTimeout(() => {
             timeFreezeOn = false;
-        }, 3000);
+        }, timeFreezeDuration);
     }
 }
 

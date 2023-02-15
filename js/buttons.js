@@ -1,7 +1,7 @@
 // Boutons de difficulté
 document.querySelectorAll('.diff_choice button').forEach((button) => {
     button.addEventListener('click', () => {
-        switch(button.id){
+        switch (button.id) {
             case 'easy':
                 gameStart(1);
                 break;
@@ -17,11 +17,22 @@ document.querySelectorAll('.diff_choice button').forEach((button) => {
             default:
                 return;
         }
-    })
+    });
 });
+document.querySelector('#btnScores').addEventListener('click', () => {
+    const highScores = JSON.parse(scoreStorage.getItem('scores')) ?? [];
 
+    showAllScores();
+    document.querySelector('#highscores #tab-score').style.display =
+        highScores === 0 ? 'none' : 'table';
+    document.querySelector('#highscores').style.display =
+        document.querySelector('#highscores').style.display === 'none'
+            ? 'block'
+            : 'none';
+});
 // Bouton replay
 document.querySelector('#replay').addEventListener('click', () => {
+    score = 0;
     gameOn = false;
     vaisseau = 390;
     aliens = [];
@@ -37,6 +48,10 @@ document.querySelector('#replay').addEventListener('click', () => {
     result.style.display = 'none';
     document.querySelector('.diff_choice').style.display = 'flex';
     document.querySelector('.game').style.display = 'none';
+    document.querySelector('.score').style.display = 'none';
+    document.querySelector('#highscores').style.display = 'none';
+    document.querySelector('.timer').style.display = 'none';
+    showAllScores();
     document.querySelector('#showSkillTree').style.display = 'block';
     document.querySelector('#hardreset').style.display = 'block';
     document.querySelector('#resetSkills').style.display = 'block';
@@ -44,7 +59,7 @@ document.querySelector('#replay').addEventListener('click', () => {
 
 // Controles
 document.addEventListener('keydown', (e) => {
-    if(checkGameOver() || !gameOn){
+    if (checkGameOver() || !gameOn) {
         return;
     }
     switch (e.key) {
@@ -101,6 +116,7 @@ document.addEventListener('keydown', (e) => {
     }
     updateGrid();
 });
+
 
 document.querySelector('#hardreset').addEventListener('click', () => {
     localStorage.clear();

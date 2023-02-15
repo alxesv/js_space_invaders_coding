@@ -9,7 +9,7 @@ body {
     width: 500px;
     height: 500px;
     margin: 0 auto;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
     background: url(ressources/background-black.png);
     animation: background-defile 5s linear infinite;
 }
@@ -27,6 +27,12 @@ h3 {
     text-align: center;
     margin: 20px 0;
     color: #fff;
+}
+.timer {
+    text-align: center;
+    margin: 20px 0;
+    color: #fff;
+    display: none;
 }
 .grille div {
     width: 25px;
@@ -85,19 +91,35 @@ h3 {
 .result .btn {
     margin-top: 20px;
 }
-.game{
+.game {
     display: none;
 }
-.diff_choice{
+.score {
+    display: none;
+}
+.diff_choice {
     display: flex;
+    flex-direction: column;
+    align-items: center;
     justify-content: center;
 }
-.diff_choice div{
+.diff_choice div {
     display: inline-block;
     background-color: antiquewhite;
     padding: 10px;
     border-radius: 4px;
     text-align: center;
+}
+.diff_choice #highscores {
+    display: none;
+    background-color: antiquewhite;
+    padding: 10px;
+    border-radius: 4px;
+    text-align: center;
+    margin-top: 20px;
+}
+#tab-score {
+    display: none;
 }
 #countdown {
     display: none;
@@ -107,6 +129,7 @@ h3 {
     color: chartreuse;
     font-size: 2rem;
 }
+
 .controls {
     height: auto;
     background-color: antiquewhite;
@@ -212,3 +235,19 @@ h3 {
     background-color: #4caf50;
     cursor: default;
   }
+  .diff_choice #highscores {
+    background-color: antiquewhite;
+    padding: 10px;
+    border-radius: 4px;
+    text-align: center;
+    margin-top: 20px;
+}
+#tab-score {
+    display: none;
+}
+.timer {
+    text-align: center;
+    margin: 20px 0;
+    color: #fff;
+    display: none;
+}

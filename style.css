@@ -174,7 +174,7 @@ h3 {
   
   /* Style for the unlock button */
   .skill button {
-    background-color: #4caf50;
+    background-color: #469ada;
     border: none;
     border-radius: 0.5em;
     color: #fff;
@@ -183,8 +183,8 @@ h3 {
     margin-top: 1em;
     padding: 0.5em 1em;
   }
-  .skill button:hover {
-    background-color: #1b741e;
+  .skill:not(.unlocked) button:hover {
+    background-color: #4a2cc3;
   }
   
   #showSkillTree {
@@ -207,4 +207,8 @@ h3 {
     background-repeat: no-repeat;
     width: 25px;
     margin: 0 -5px;
+  }
+  .unlocked button {
+    background-color: #4caf50;
+    cursor: default;
   }

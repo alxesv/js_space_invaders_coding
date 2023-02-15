@@ -89,6 +89,9 @@ function skillTreeUI(){
         `;
         if(unlockedSkills.includes(skillId)){
             skillDiv.classList.add('unlocked');
+            const unlockButton = document.createElement('button');
+                unlockButton.innerHTML = 'Unlocked';
+                skillDiv.appendChild(unlockButton);
         }else{
             const preReqMet = skill.preReq.every(skill => unlockedSkills.includes(skill));
             if(preReqMet){

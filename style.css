@@ -104,11 +104,15 @@ h3 {
     justify-content: center;
 }
 .diff_choice div {
+    box-sizing: border-box;
     display: inline-block;
+    margin-top: 140px;
     background-color: antiquewhite;
     padding: 10px;
     border-radius: 4px;
     text-align: center;
+    padding: 50px;
+    width: 70%;
 }
 .diff_choice #highscores {
     display: none;
@@ -138,18 +142,18 @@ h3 {
     border-radius: 4px;
     width: 100px;
     position: absolute;
-    top : 40%;
-    left : 0;
+    top: 40%;
+    left: 0;
     font-size: 1.2rem;
 }
-@media screen and (min-width:1024px){
-    .controls{
+@media screen and (min-width: 1024px) {
+    .controls {
         width: 150px;
         left: 5%;
     }
 }
-@media screen and (min-width:1440px){
-    .controls{
+@media screen and (min-width: 1440px) {
+    .controls {
         width: 250px;
         left: 10%;
     }
@@ -168,10 +172,11 @@ h3 {
     display: flex;
     flex-wrap: wrap;
     margin: 1em;
-  }
-  
-  /* Style for each skill div */
-  .skill, .skill_points {
+}
+
+/* Style for each skill div */
+.skill,
+.skill_points {
     background-color: antiquewhite;
     border: 1px solid #ccc;
     border-radius: 0.5em;
@@ -183,20 +188,20 @@ h3 {
     padding: 1em;
     color: #000;
     font-size: 0.7rem;
-  }
-  
-  /* Style for the skill name heading */
-  .skill_tree h3 {
+}
+
+/* Style for the skill name heading */
+.skill_tree h3 {
     font-size: 1.5em;
     margin-top: 0;
     color: #000;
-  }
-  .skill_tree p {
+}
+.skill_tree p {
     margin: 0;
-  }
-  
-  /* Style for the unlock button */
-  .skill button {
+}
+
+/* Style for the unlock button */
+.skill button {
     background-color: #469ada;
     border: none;
     border-radius: 0.5em;
@@ -205,37 +210,53 @@ h3 {
     font-size: 1em;
     margin-top: 1em;
     padding: 0.5em 1em;
-  }
-  .skill:not(.unlocked) button:hover {
+}
+.skill:not(.unlocked) button:hover {
     background-color: #4a2cc3;
-  }
-  
-  #showSkillTree {
-    position:absolute;
+}
+
+#showSkillTree {
+    background-color: #469ada;
+    position: absolute;
     top: 0;
     right: 0;
-  }
-  #resetSkills {
-    position:absolute;
-    top: 5%;
+}
+#showSkillTree:hover,
+#showSkillTree:active {
+    background-color: #2f638b;
+    cursor: pointer;
+    color: #fff;
+}
+#resetSkills {
+    background-color: #3b3838;
+    color: #fff;
+    border: #ccc;
+    position: absolute;
+    top: 10%;
     right: 0;
-  }
-  .skill_points {
+}
+#resetSkills:hover,
+#resetSkills:active {
+    background-color: #585c5e;
+    cursor: pointer;
+    color: rgb(0, 0, 0);
+}
+.skill_points {
     max-height: 30px;
-  }
-  .line {
+}
+.line {
     background: url(ressources/arrow.png);
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
     width: 25px;
     margin: 0 -5px;
-  }
-  .unlocked button {
+}
+.unlocked button {
     background-color: #4caf50;
     cursor: default;
-  }
-  .diff_choice #highscores {
+}
+.diff_choice #highscores {
     background-color: antiquewhite;
     padding: 10px;
     border-radius: 4px;
@@ -250,4 +271,24 @@ h3 {
     margin: 20px 0;
     color: #fff;
     display: none;
+}
+#btnScores {
+    background-color: coral;
+    position: absolute;
+    top: 20%;
+    right: 0;
+}
+#btnScores:hover {
+    background-color: rgba(175, 89, 58, 0.767);
+    cursor: pointer;
+    color: #fff;
+}
+button {
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+}
+h1 {
+    text-align: center;
+    color: #fff;
 }

@@ -69,11 +69,11 @@ function updateGrid() {
             htmlGrille[i].classList.remove('alien');
         }
         if (i === vaisseau) {
-            if(!shieldOn){
-            htmlGrille[vaisseau].classList.add('tireur');
-        }else{
-            htmlGrille[vaisseau].classList.add('shield');
-        }
+            if (!shieldOn) {
+                htmlGrille[vaisseau].classList.add('tireur');
+            } else {
+                htmlGrille[vaisseau].classList.add('shield');
+            }
         } else {
             htmlGrille[i].classList.remove('shield');
             htmlGrille[i].classList.remove('tireur');
@@ -90,7 +90,7 @@ function checkGameOver() {
         if (aliens.length === 0) {
             result_message.innerHTML = 'You Win';
             result.style.display = 'block';
-            skillPoints += diff-1;
+            skillPoints += diff - 1;
             localStorage.setItem('skillPoints', skillPoints);
             updateSkillPointsCounter();
             return true;
@@ -133,12 +133,15 @@ function gameLoop() {
         if (enemyFire) {
             enemyShoot();
         }
-        if(checkGameOver()){
+        if (checkGameOver()) {
             clearInterval(gameInterval);
             clearInterval(stopInterval);
             if (aliens.length === 0) {
                 score = Math.round(
-                    (1000 / parseFloat(document.querySelector('.timer').textContent)) *
+                    (1000 /
+                        parseFloat(
+                            document.querySelector('.timer').textContent
+                        )) *
                         score
                 );
             }
@@ -148,8 +151,6 @@ function gameLoop() {
         updateScore();
     }, timeRate);
 }
-
-   
 
 function timerGame() {
     document.querySelector('.timer').style.display = 'block';
@@ -166,10 +167,11 @@ function gameStart(difficulty) {
     document.querySelector('#showSkillTree').style.display = 'none';
     document.querySelector('#hardreset').style.display = 'none';
     document.querySelector('#resetSkills').style.display = 'none';
+    document.querySelector('#btnScores').style.display = 'none';
     document.querySelector('.game').style.display = 'block';
 
     skillTreeDiv.style.display = 'none';
-    switch(difficulty){
+    switch (difficulty) {
         case 1:
             diff = 1;
             enemyFire = false;
@@ -198,22 +200,22 @@ function gameStart(difficulty) {
             return;
     }
     checkSkills();
-    if(timeFreeze > 0){
+    if (timeFreeze > 0) {
         document.querySelector('#freeze_list').style.display = 'block';
         freezeDisplay.innerHTML = `(${timeFreeze})`;
-    }else{
+    } else {
         document.querySelector('#freeze_list').style.display = 'none';
     }
-    if(bombs > 0){
+    if (bombs > 0) {
         document.querySelector('#bomb_list').style.display = 'block';
         bombDisplay.innerHTML = `(${bombs})`;
-    }else{
+    } else {
         document.querySelector('#bomb_list').style.display = 'none';
     }
-    if (shields > 0){
+    if (shields > 0) {
         document.querySelector('#shield_list').style.display = 'block';
         shieldDisplay.innerHTML = `(${shields})`;
-    }else{
+    } else {
         document.querySelector('#shield_list').style.display = 'none';
     }
     let i = 3;

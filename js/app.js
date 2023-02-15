@@ -19,8 +19,6 @@ let shieldDisplay = document.querySelector('#shields_left');
 // is the shield active
 let shieldOn = false;
 let shields;
-// wait function
-const timer = (ms) => new Promise((res) => setTimeout(res, ms));
 
 
 function inRange(x, min, max) {
@@ -56,6 +54,7 @@ function updateGrid() {
         return;
     }
     for (let alien of aliens) {
+        htmlGrille[alien].classList.remove('boom');
         htmlGrille[alien].classList.add('alien');
     }
     for (let i = 0; i < htmlGrille.length; i++) {
@@ -95,11 +94,11 @@ function checkGameOver(){
 }
 
 // Déplacement des aliens et boucle de jeu
-async function gameLoop() {
+function gameLoop() {
     let alienDir = true;
     let border = false;
     let skipBorder = false;
-    while (!checkGameOver()) {
+    let gameInterval = setInterval(() => {
         for (let alien of aliens) {
             if (htmlGrille[alien].getAttribute('data') == 'right') {
                 alienDir = false;
@@ -120,9 +119,11 @@ async function gameLoop() {
         if(enemyFire){
             enemyShoot();
         }
-        await timer(timeRate);
+        if(checkGameOver()){
+            clearInterval(gameInterval);
+        }
         updateGrid();
-    }
+    }, timeRate);
 }
 
 // Lance le jeu

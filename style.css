@@ -108,19 +108,34 @@ h3 {
     font-size: 2rem;
 }
 .controls {
-    height: 150px;
+    height: auto;
     background-color: antiquewhite;
     display: inline-block;
     padding: 15px;
     border-radius: 4px;
-    width: 250px;
+    width: 100px;
     position: absolute;
     top : 40%;
-    left : 5%;
+    left : 0;
     font-size: 1.2rem;
+}
+@media screen and (min-width:1024px){
+    .controls{
+        width: 150px;
+        left: 5%;
+    }
+}
+@media screen and (min-width:1440px){
+    .controls{
+        width: 250px;
+        left: 10%;
+    }
 }
 .controls ul {
     list-style: none;
     padding: 0;
     margin: 0;
+}
+.controls ul li {
+    margin-bottom: 10px;
 }

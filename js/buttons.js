@@ -48,6 +48,11 @@ document.addEventListener('keydown', (e) => {
         return;
     }
     switch (e.key) {
+        case 'f':
+            //freeze time
+            e.preventDefault();
+            activateFreezeTime();
+            break;
         case 'b':
             //bouclier
             e.preventDefault();

@@ -45,7 +45,7 @@ const skillTree = {
     },
     "superShot": {
         "name": "Super shot",
-        "description": "Your shot now fires three lasers",
+        "description": "Your shot is now supercharged",
         "cost": 5,
         "preReq": ["enhancedShot"],
     },

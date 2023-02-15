@@ -142,17 +142,34 @@ function shoot(type=1){
                     htmlGrille[laser].classList.remove('laser');
                     return;
                 }
-                if (aliens.includes(laser)) {
-                    score += pointAlien;
-                    htmlGrille[laser].classList.remove('laser');
-                    htmlGrille[laser].classList.add('boom');
-                    setTimeout(() => {
-                        htmlGrille[laser].classList.remove('boom');
-                    }, 200);
-                    aliens.splice(aliens.indexOf(laser), 1);
-                    clearInterval(laserInterval);
-                    updateGrid();
-                    return;
+                if(superShot){
+                    if (aliens.includes(laser)) {
+                        score += pointAlien;
+                        htmlGrille[laser].classList.add('boom');
+                        setTimeout(() => {
+                            for (let i = 0; i < htmlGrille.length; i++) {
+                                if (htmlGrille[i].classList.contains('boom') && !aliens.includes(i)) {
+                                    htmlGrille[i].classList.remove('boom');
+                                }
+                            }
+                        }, 300);
+                        aliens.splice(aliens.indexOf(laser), 1);
+                        updateGrid();
+                        return;
+                    }
+                }else{
+                    if (aliens.includes(laser)) {
+                        score += pointAlien;
+                        htmlGrille[laser].classList.remove('laser');
+                        htmlGrille[laser].classList.add('boom');
+                        setTimeout(() => {
+                            htmlGrille[laser].classList.remove('boom');
+                        }, 200);
+                        aliens.splice(aliens.indexOf(laser), 1);
+                        clearInterval(laserInterval);
+                        updateGrid();
+                        return;
+                    }
                 }
                 htmlGrille[laser].classList.remove('laser');
                 laser -= 20;

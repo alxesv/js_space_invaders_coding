@@ -9,7 +9,7 @@ body {
     width: 500px;
     height: 500px;
     margin: 0 auto;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
     background: url(ressources/background-black.png);
     animation: background-defile 5s linear infinite;
 }
@@ -79,14 +79,17 @@ h3 {
 .result .btn {
     margin-top: 20px;
 }
-.game{
+.game {
     display: none;
 }
-.diff_choice{
+.score {
+    display: none;
+}
+.diff_choice {
     display: flex;
     justify-content: center;
 }
-.diff_choice div{
+.diff_choice div {
     display: inline-block;
     background-color: antiquewhite;
     padding: 10px;

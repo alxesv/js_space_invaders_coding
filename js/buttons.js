@@ -1,7 +1,7 @@
 // Boutons de difficulté
 document.querySelectorAll('.diff_choice button').forEach((button) => {
     button.addEventListener('click', () => {
-        switch(button.id){
+        switch (button.id) {
             case 'easy':
                 gameStart(1);
                 break;
@@ -17,7 +17,7 @@ document.querySelectorAll('.diff_choice button').forEach((button) => {
             default:
                 return;
         }
-    })
+    });
 });
 
 // Bouton replay
@@ -37,11 +37,12 @@ document.querySelector('#replay').addEventListener('click', () => {
     result.style.display = 'none';
     document.querySelector('.diff_choice').style.display = 'flex';
     document.querySelector('.game').style.display = 'none';
+    // document.querySelector('.score').removeChild();
 });
 
 // Controles
 document.addEventListener('keydown', (e) => {
-    if(checkGameOver() || !gameOn){
+    if (checkGameOver() || !gameOn) {
         return;
     }
     switch (e.key) {

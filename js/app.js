@@ -14,14 +14,21 @@ let bombs;
 let diff;
 // game state
 let gameOn = false;
-
+let scoreStorage = localStorage;
+let score = 0;
 function inRange(x, min, max) {
     return (x - min) * (x - max) <= 0;
 }
-
 // Initialisation du jeu
-function initGame(){
-    for(let i = 0; i < 400; i ++){
+function initGame() {
+    document.querySelector('.score').style.display = 'block';
+    document.querySelector('.score').createElement('h3');
+    document.querySelector('.score').createTextNode(`Score : ${score}`);
+    document.querySelector('.score').replaceChild(sp1, sp2);
+    document
+        .querySelector('.score')
+        .firstChild.insertAdjacentText('beforeend', ` ${score}`);
+    for (let i = 0; i < 400; i++) {
         let div = document.createElement('div');
         if (i % 20 === 0) {
             div.setAttribute('data', 'left');
@@ -42,7 +49,7 @@ function initGame(){
 
 // Mise à jour de la grille
 function updateGrid() {
-    if(dead){
+    if (dead) {
         htmlGrille[vaisseau].classList.remove('tireur');
         htmlGrille[vaisseau].classList.add('boom');
         return;
@@ -63,22 +70,26 @@ function updateGrid() {
 }
 
 // Vérifie si la partie est terminée
-function checkGameOver(){
-    if(gameOn){
-        const lastLine = Array.from({length: 20}, (_, k) => k + 380);
+function checkGameOver() {
+    if (gameOn) {
+        const lastLine = Array.from({ length: 20 }, (_, k) => k + 380);
         let result = document.querySelector('.result');
         let result_message = document.querySelector('.result_message');
         if (aliens.length === 0) {
             result_message.innerHTML = 'You Win';
             result.style.display = 'block';
             return true;
-        }else if (aliens.includes(vaisseau) || lastLine.some(num => aliens.includes(num)) || dead){
+        } else if (
+            aliens.includes(vaisseau) ||
+            lastLine.some((num) => aliens.includes(num)) ||
+            dead
+        ) {
             result_message.innerHTML = 'You Lose';
             result.style.display = 'block';
             return true;
         }
     }
-        return false;
+    return false;
 }
 
 // Déplacement des aliens et boucle de jeu
@@ -86,8 +97,13 @@ async function gameLoop() {
     let alienDir = true;
     let border = false;
     let skipBorder = false;
+
     const timer = (ms) => new Promise((res) => setTimeout(res, ms));
     while (!checkGameOver()) {
+        console.log(score);
+        document
+            .querySelector('.score')
+            .firstChild.insertAdjacentText('beforeend', ` ${score}`);
         for (let alien of aliens) {
             if (htmlGrille[alien].getAttribute('data') == 'right') {
                 alienDir = false;
@@ -105,7 +121,7 @@ async function gameLoop() {
             skipBorder = false;
             border = false;
         }
-        if(enemyFire){
+        if (enemyFire) {
             enemyShoot();
         }
         await timer(timeRate);
@@ -114,10 +130,14 @@ async function gameLoop() {
 }
 
 // Lance le jeu
-function gameStart(difficulty){
+function gameStart(difficulty) {
     document.querySelector('.diff_choice').style.display = 'none';
     document.querySelector('.game').style.display = 'block';
-    switch(difficulty){
+    // document.querySelector('.score').style.display = 'block';
+    // document
+    //     .querySelector('.score')
+    //     .firstChild.insertAdjacentText('beforeend', ` ${score}`);
+    switch (difficulty) {
         case 1:
             diff = 1;
             enemyFire = false;
@@ -149,7 +169,7 @@ function gameStart(difficulty){
     document.querySelector('#countdown').innerHTML = '';
     document.querySelector('#countdown').style.display = 'block';
     let startInterval = setInterval(() => {
-        if(i === 0){
+        if (i === 0) {
             initGame();
             gameLoop();
             gameOn = true;
@@ -157,6 +177,6 @@ function gameStart(difficulty){
             document.querySelector('#countdown').style.display = 'none';
         }
         document.querySelector('#countdown').innerHTML = i;
-        i--
+        i--;
     }, 1000);
 }

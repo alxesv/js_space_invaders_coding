@@ -3,7 +3,7 @@ let aliens = [];
 // speed of the aliens (in ms), the lower the faster
 let timeRate;
 // cooldown between each shot (in ms), the lower the faster
-const cooldownRate = 1000;
+let cooldownRate;
 // initial position of the player
 let vaisseau = 390;
 let cooldown = false;
@@ -19,6 +19,9 @@ let shieldDisplay = document.querySelector('#shields_left');
 // is the shield active
 let shieldOn = false;
 let shields;
+let timeFreeze;
+let timeFreezeOn = false;
+let superShot;
 
 
 function inRange(x, min, max) {
@@ -83,6 +86,9 @@ function checkGameOver(){
         if (aliens.length === 0) {
             result_message.innerHTML = 'You Win';
             result.style.display = 'block';
+            skillPoints += diff-1;
+            localStorage.setItem('skillPoints', skillPoints);
+            updateSkillPointsCounter();
             return true;
         }else if (aliens.includes(vaisseau) || lastLine.some(num => aliens.includes(num)) || dead){
             result_message.innerHTML = 'You Lose';
@@ -129,45 +135,44 @@ function gameLoop() {
 // Lance le jeu
 function gameStart(difficulty){
     document.querySelector('.diff_choice').style.display = 'none';
+    document.querySelector('#showSkillTree').style.display = 'none';
+    document.querySelector('#hardreset').style.display = 'none';
+    document.querySelector('#resetSkills').style.display = 'none';
     document.querySelector('.game').style.display = 'block';
+    skillTreeDiv.style.display = 'none';
     switch(difficulty){
         case 1:
             diff = 1;
             enemyFire = false;
             timeRate = 1000;
-            bombs = 3;
-            shields = 0;
             break;
         case 2:
             diff = 2;
             enemyFire = false;
             timeRate = 600;
-            bombs = 2;
-            shields = 0;
             break;
         case 3:
             diff = 3;
             enemyFire = true;
             timeRate = 600;
-            bombs = 1;
-            shields = 2;
             break;
         case 4:
             diff = 4;
             enemyFire = true;
             timeRate = 300;
-            bombs = 0;
-            shields = 1;
             break;
         default:
             return;
     }
+    checkSkills();
     if(bombs > 0){
-    bombDisplay.innerHTML = `(${bombs})`;
+        document.querySelector('#bomb_list').style.display = 'block';
+        bombDisplay.innerHTML = `(${bombs})`;
     }else{
         document.querySelector('#bomb_list').style.display = 'none';
     }
     if (shields > 0){
+        document.querySelector('#shield_list').style.display = 'block';
         shieldDisplay.innerHTML = `(${shields})`;
     }else{
         document.querySelector('#shield_list').style.display = 'none';

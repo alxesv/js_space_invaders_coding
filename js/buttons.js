@@ -37,6 +37,9 @@ document.querySelector('#replay').addEventListener('click', () => {
     result.style.display = 'none';
     document.querySelector('.diff_choice').style.display = 'flex';
     document.querySelector('.game').style.display = 'none';
+    document.querySelector('#showSkillTree').style.display = 'block';
+    document.querySelector('#hardreset').style.display = 'block';
+    document.querySelector('#resetSkills').style.display = 'block';
 });
 
 // Controles
@@ -48,7 +51,7 @@ document.addEventListener('keydown', (e) => {
         case 'b':
             //bouclier
             e.preventDefault();
-            shield();
+            activateShield();
             break;
         case 'Control':
             //bomb
@@ -97,4 +100,22 @@ document.addEventListener('keydown', (e) => {
             break;
     }
     updateGrid();
+});
+
+document.querySelector('#hardreset').addEventListener('click', () => {
+    localStorage.clear();
+    location.reload();
+});
+
+document.querySelector('#showSkillTree').addEventListener('click', () => {
+    if(skillTreeDiv.style.display === 'none'){
+        skillTreeDiv.style.display = 'flex';
+    }else{
+        skillTreeDiv.style.display = 'none';
+    }
+});
+
+document.querySelector('#resetSkills').addEventListener('click', () => {
+    resetSkills();
+    location.reload();
 });

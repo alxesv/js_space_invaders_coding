@@ -235,3 +235,19 @@ h3 {
     background-color: #4caf50;
     cursor: default;
   }
+  .diff_choice #highscores {
+    background-color: antiquewhite;
+    padding: 10px;
+    border-radius: 4px;
+    text-align: center;
+    margin-top: 20px;
+}
+#tab-score {
+    display: none;
+}
+.timer {
+    text-align: center;
+    margin: 20px 0;
+    color: #fff;
+    display: none;
+}

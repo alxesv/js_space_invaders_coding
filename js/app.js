@@ -139,8 +139,6 @@ function gameLoop() {
         updateGrid();
         updateScore();
     }, timeRate);
-}
-
     if (aliens.length === 0) {
         score = Math.round(
             (1000 / parseFloat(document.querySelector('.timer').textContent)) *
@@ -149,6 +147,9 @@ function gameLoop() {
     }
     checkScores(score);
 }
+
+   
+
 function timerGame() {
     document.querySelector('.timer').style.display = 'block';
     let startTime = Date.now();

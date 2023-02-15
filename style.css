@@ -63,6 +63,12 @@ h3 {
     background-position: center;
     background-size: cover;
 }
+.shield {
+    background: url(ressources/vaisseau_shield.png);
+    background-position: center;
+    background-size: cover;
+    transform: rotate(180deg);
+}
 .result {
     width: 150px;
     height: 100px;

@@ -8,13 +8,31 @@ function moveAliens(right, step) {
         }
     }
 }
-
+function shield(){
+    if(!shieldOn && shields > 0){
+        htmlGrille[vaisseau].classList.add('shield');
+        shieldOn = true;
+        shields--;
+        shieldDisplay.innerHTML = `(${shields})`;
+        setTimeout(() => {
+            htmlGrille[vaisseau].classList.remove('shield');
+            shieldOn = false;
+        }, 5000);
+    }
+}
 // Tir des aliens et mort du vaisseau
 function enemyShoot(){
     let randomAlien = aliens[Math.floor(Math.random() * aliens.length)];
     let laser = randomAlien + 20;
     let laserInterval = setInterval(() => {
-        if (laser === vaisseau) {
+        if(laser === vaisseau && shieldOn){
+            htmlGrille[vaisseau].classList.remove('shield');
+            htmlGrille[vaisseau].classList.remove('enemy_laser');
+            shieldOn = false;
+            clearInterval(laserInterval);
+            return;
+        }
+        if (laser === vaisseau && !shieldOn) {
             htmlGrille[vaisseau].classList.remove('tireur');
             htmlGrille[vaisseau].classList.remove('enemy_laser');
             htmlGrille[vaisseau].classList.add('boom');

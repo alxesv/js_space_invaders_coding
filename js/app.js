@@ -135,17 +135,17 @@ function gameLoop() {
         if(checkGameOver()){
             clearInterval(gameInterval);
             clearInterval(stopInterval);
+            if (aliens.length === 0) {
+                score = Math.round(
+                    (1000 / parseFloat(document.querySelector('.timer').textContent)) *
+                        score
+                );
+            }
+            checkScores(score);
         }
         updateGrid();
         updateScore();
     }, timeRate);
-    if (aliens.length === 0) {
-        score = Math.round(
-            (1000 / parseFloat(document.querySelector('.timer').textContent)) *
-                score
-        );
-    }
-    checkScores(score);
 }
 
    

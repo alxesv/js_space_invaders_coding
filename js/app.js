@@ -26,6 +26,7 @@ let shieldOn = false;
 let shields;
 let timeFreeze;
 let timeFreezeOn = false;
+let timeFreezeDuration;
 let superShot;
 
 function inRange(x, min, max) {

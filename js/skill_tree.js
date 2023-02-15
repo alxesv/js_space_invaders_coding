@@ -31,6 +31,12 @@ const skillTree = {
         "cost": 3,
         "preReq": [],
     },
+    "improveTimeFreeze": {
+        "name": "Improved Time freeze",
+        "description": "Freezes time for a longer period",
+        "cost": 5,
+        "preReq": ["timeFreeze"],
+    },
     "enhancedShot": {
         "name": "Enhanced shot",
         "description": "Reduces the cooldown of your shot",
@@ -144,6 +150,10 @@ function checkSkills(){
 
     if(unlockedSkills.includes('timeFreeze')){
         timeFreeze = 1;
+        timeFreezeDuration = 3000;
+        if(unlockedSkills.includes('improveTimeFreeze')){
+            timeFreezeDuration = 6000;
+        }
     }else{
         timeFreeze = 0;
     }

@@ -20,6 +20,7 @@ let pointAlien = 10;
 let score = 0;
 let bombDisplay = document.querySelector('#bombs_left');
 let shieldDisplay = document.querySelector('#shields_left');
+let freezeDisplay = document.querySelector('#freeze_left');
 // is the shield active
 let shieldOn = false;
 let shields;
@@ -197,6 +198,12 @@ function gameStart(difficulty) {
             return;
     }
     checkSkills();
+    if(timeFreeze > 0){
+        document.querySelector('#freeze_list').style.display = 'block';
+        freezeDisplay.innerHTML = `(${timeFreeze})`;
+    }else{
+        document.querySelector('#freeze_list').style.display = 'none';
+    }
     if(bombs > 0){
         document.querySelector('#bomb_list').style.display = 'block';
         bombDisplay.innerHTML = `(${bombs})`;

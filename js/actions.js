@@ -1,5 +1,6 @@
 // Déplacement des aliens
 function moveAliens(right, step) {
+    if(!timeFreezeOn){
     for (let i = 0; i < aliens.length; i++) {
         if (right) {
             aliens[i] += step;
@@ -7,7 +8,23 @@ function moveAliens(right, step) {
             aliens[i] -= step;
         }
     }
+}else{
+    return;
 }
+}
+
+// Fonction freeze time
+function activateFreezeTime(){
+    if(!timeFreezeOn && timeFreeze> 0){
+        timeFreezeOn = true;
+        timeFreeze--;
+        freezeDisplay.innerHTML = `(${timeFreeze})`;
+        setTimeout(() => {
+            timeFreezeOn = false;
+        }, 3000);
+    }
+}
+
 // Fonction bouclier
 function activateShield(){
     if(!shieldOn && shields > 0){
@@ -26,6 +43,7 @@ function activateShield(){
 // Tir des aliens et mort du vaisseau
 
 function enemyShoot(){
+    if(!timeFreezeOn){
     let randomAlien = aliens[Math.floor(Math.random() * aliens.length)];
     let laser = randomAlien + 20;
     let laserInterval = setInterval(() => {
@@ -58,7 +76,11 @@ function enemyShoot(){
             htmlGrille[laser].classList.add('enemy_laser');
         }
         updateGrid();
-    }, 100);
+    }, 100)
+}else{
+    return;
+}
+
 }
 
 // Tir du vaisseau et mort des aliens

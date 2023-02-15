@@ -7,15 +7,22 @@
         <link rel="stylesheet" href="style.css" />
     </head>
     <body>
+        <div class="option_buttons">
+            <button id="hardreset" style="position:absolute; left:0; top:0;">Hardreset</button>
+            <button id="showSkillTree">Skill Tree</button>
+            <button id="resetSkills">Reset skills</button>
+        </div>
         <div id ="countdown"></div>
         <div class="diff_choice">
             <div>
-            <p>Choose your difficulty</p>
-            <button id="easy">Easy</button>
-            <button id="normal">Normal</button>
-            <button id="hard">Hard</button>
-            <button id="veryhard">Very hard</button>
+                <p>Choose your difficulty</p>
+                <button id="easy">Easy</button>
+                <button id="normal">Normal</button>
+                <button id="hard">Hard</button>
+                <button id="veryhard">Very hard</button>
+            </div>
         </div>
+        <div class="skill_tree" style="display:none">
         </div>
         <div class="game">
         <h3>Score :</h3>
@@ -36,6 +43,7 @@
     <script src="js/app.js"></script>
     <script src="js/buttons.js"></script>
     <script src="js/actions.js"></script>
+    <script src="js/skill_tree.js"></script>
     
 </body>
 </html>

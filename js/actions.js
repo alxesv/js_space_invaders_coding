@@ -8,7 +8,8 @@ function moveAliens(right, step) {
         }
     }
 }
-function shield(){
+// Fonction bouclier
+function activateShield(){
     if(!shieldOn && shields > 0){
         htmlGrille[vaisseau].classList.add('shield');
         shieldOn = true;
@@ -18,6 +19,8 @@ function shield(){
             htmlGrille[vaisseau].classList.remove('shield');
             shieldOn = false;
         }, 5000);
+    }else{
+        return;
     }
 }
 // Tir des aliens et mort du vaisseau
@@ -48,9 +51,11 @@ function enemyShoot(){
             clearInterval(laserInterval)
             return;
         }
-        htmlGrille[laser].classList.remove('enemy_laser');
-        laser += 20;
-        htmlGrille[laser].classList.add('enemy_laser');
+        if(htmlGrille[laser]){
+            htmlGrille[laser].classList.remove('enemy_laser');
+            laser += 20;
+            htmlGrille[laser].classList.add('enemy_laser');
+        }
         updateGrid();
     }, 100)
         
@@ -76,7 +81,7 @@ function shoot(type=1){
                         const pos = positionsToRemove[i];
                         htmlGrille[pos].classList.add('boom');
                         const index = aliens.indexOf(pos);
-                        if (index !== -1) {
+                        if (index !== -1 && aliens.includes(pos)) {
                           aliens.splice(index, 1);
                         }
                       }

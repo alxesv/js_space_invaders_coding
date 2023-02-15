@@ -8,13 +8,35 @@ function moveAliens(right, step) {
         }
     }
 }
-
+// Fonction bouclier
+function activateShield(){
+    if(!shieldOn && shields > 0){
+        htmlGrille[vaisseau].classList.add('shield');
+        shieldOn = true;
+        shields--;
+        shieldDisplay.innerHTML = `(${shields})`;
+        setTimeout(() => {
+            htmlGrille[vaisseau].classList.remove('shield');
+            shieldOn = false;
+        }, 5000);
+    }else{
+        return;
+    }
+}
 // Tir des aliens et mort du vaisseau
-async function enemyShoot() {
+
+function enemyShoot(){
     let randomAlien = aliens[Math.floor(Math.random() * aliens.length)];
     let laser = randomAlien + 20;
     let laserInterval = setInterval(() => {
-        if (laser === vaisseau) {
+        if(laser === vaisseau && shieldOn){
+            htmlGrille[vaisseau].classList.remove('shield');
+            htmlGrille[vaisseau].classList.remove('enemy_laser');
+            shieldOn = false;
+            clearInterval(laserInterval);
+            return;
+        }
+        if (laser === vaisseau && !shieldOn) {
             htmlGrille[vaisseau].classList.remove('tireur');
             htmlGrille[vaisseau].classList.remove('enemy_laser');
             htmlGrille[vaisseau].classList.add('boom');
@@ -30,15 +52,18 @@ async function enemyShoot() {
             clearInterval(laserInterval);
             return;
         }
-        htmlGrille[laser].classList.remove('enemy_laser');
-        laser += 20;
-        htmlGrille[laser].classList.add('enemy_laser');
+        if(htmlGrille[laser]){
+            htmlGrille[laser].classList.remove('enemy_laser');
+            laser += 20;
+            htmlGrille[laser].classList.add('enemy_laser');
+        }
         updateGrid();
     }, 100);
 }
 
 // Tir du vaisseau et mort des aliens
-async function shoot(type = 1) {
+
+function shoot(type=1){
     if (!cooldown) {
         if (type === 2 && bombs > 0) {
             let bomb = vaisseau - 20;
@@ -85,8 +110,10 @@ async function shoot(type = 1) {
                 updateGrid();
             }, 300);
             bombs--;
-        } else if (type === 1) {
-            let laser = vaisseau - 20;
+
+            bombDisplay.innerHTML = `(${bombs})`;
+        }else if(type === 1){
+            let laser = vaisseau-20;
             let laserInterval = setInterval(() => {
                 if (laser < 20) {
                     clearInterval(laserInterval);

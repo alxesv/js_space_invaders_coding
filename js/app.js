@@ -3,7 +3,7 @@ let aliens = [];
 // speed of the aliens (in ms), the lower the faster
 let timeRate;
 // cooldown between each shot (in ms), the lower the faster
-const cooldownRate = 1000;
+let cooldownRate;
 // initial position of the player
 let vaisseau = 390;
 let cooldown = false;
@@ -18,6 +18,15 @@ let gameOn = false;
 let scoreStorage = localStorage;
 let pointAlien = 10;
 let score = 0;
+let bombDisplay = document.querySelector('#bombs_left');
+let shieldDisplay = document.querySelector('#shields_left');
+// is the shield active
+let shieldOn = false;
+let shields;
+let timeFreeze;
+let timeFreezeOn = false;
+let superShot;
+
 function inRange(x, min, max) {
     return (x - min) * (x - max) <= 0;
 }
@@ -51,6 +60,7 @@ function updateGrid() {
         return;
     }
     for (let alien of aliens) {
+        htmlGrille[alien].classList.remove('boom');
         htmlGrille[alien].classList.add('alien');
     }
     for (let i = 0; i < htmlGrille.length; i++) {
@@ -58,8 +68,13 @@ function updateGrid() {
             htmlGrille[i].classList.remove('alien');
         }
         if (i === vaisseau) {
+            if(!shieldOn){
             htmlGrille[vaisseau].classList.add('tireur');
+        }else{
+            htmlGrille[vaisseau].classList.add('shield');
+        }
         } else {
+            htmlGrille[i].classList.remove('shield');
             htmlGrille[i].classList.remove('tireur');
         }
     }
@@ -74,6 +89,9 @@ function checkGameOver() {
         if (aliens.length === 0) {
             result_message.innerHTML = 'You Win';
             result.style.display = 'block';
+            skillPoints += diff-1;
+            localStorage.setItem('skillPoints', skillPoints);
+            updateSkillPointsCounter();
             return true;
         } else if (
             aliens.includes(vaisseau) ||
@@ -89,14 +107,11 @@ function checkGameOver() {
 }
 
 // Déplacement des aliens et boucle de jeu
-async function gameLoop() {
+function gameLoop() {
     let alienDir = true;
     let border = false;
     let skipBorder = false;
-
-    const timer = (ms) => new Promise((res) => setTimeout(res, ms));
-    while (!checkGameOver()) {
-        updateScore();
+    let gameInterval = setInterval(() => {
         for (let alien of aliens) {
             if (htmlGrille[alien].getAttribute('data') == 'right') {
                 alienDir = false;
@@ -117,11 +132,14 @@ async function gameLoop() {
         if (enemyFire) {
             enemyShoot();
         }
-
-        await timer(timeRate);
+        if(checkGameOver()){
+            clearInterval(gameInterval);
+            clearInterval(stopInterval);
+        }
         updateGrid();
-    }
-    clearInterval(stopInterval);
+        updateScore();
+    }, timeRate);
+}
 
     if (aliens.length === 0) {
         score = Math.round(
@@ -143,39 +161,52 @@ function timerGame() {
 // Lance le jeu
 function gameStart(difficulty) {
     document.querySelector('.diff_choice').style.display = 'none';
+    document.querySelector('#showSkillTree').style.display = 'none';
+    document.querySelector('#hardreset').style.display = 'none';
+    document.querySelector('#resetSkills').style.display = 'none';
     document.querySelector('.game').style.display = 'block';
 
-    switch (difficulty) {
+    skillTreeDiv.style.display = 'none';
+    switch(difficulty){
         case 1:
             diff = 1;
             enemyFire = false;
             timeRate = 1000;
-            bombs = 3;
             pointAlien = 10;
             break;
         case 2:
             diff = 2;
             enemyFire = false;
             timeRate = 600;
-            bombs = 2;
             pointAlien = 15;
             break;
         case 3:
             diff = 3;
             enemyFire = true;
             timeRate = 600;
-            bombs = 1;
             pointAlien = 20;
             break;
         case 4:
             diff = 4;
             enemyFire = true;
             timeRate = 300;
-            bombs = 0;
             pointAlien = 30;
             break;
         default:
             return;
+    }
+    checkSkills();
+    if(bombs > 0){
+        document.querySelector('#bomb_list').style.display = 'block';
+        bombDisplay.innerHTML = `(${bombs})`;
+    }else{
+        document.querySelector('#bomb_list').style.display = 'none';
+    }
+    if (shields > 0){
+        document.querySelector('#shield_list').style.display = 'block';
+        shieldDisplay.innerHTML = `(${shields})`;
+    }else{
+        document.querySelector('#shield_list').style.display = 'none';
     }
     let i = 3;
     document.querySelector('#countdown').innerHTML = '';

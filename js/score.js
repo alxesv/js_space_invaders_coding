@@ -31,14 +31,10 @@ function showAllScores() {
     const highScores = JSON.parse(scoreStorage.getItem('scores')) ?? [];
     const tr = document.querySelectorAll('#highscores table tbody tr');
     for (let i = 0; i < tr.length; i++) {
-        console.log(tr[i]);
-        console.log(document.querySelector('#highscores table tbody'));
         document.querySelector('#highscores table tbody').removeChild(tr[i]);
     }
-    console.log(tr);
 
     highScores.forEach((score) => {
-        console.log(score);
         let ligne = document.createElement('tr');
         let cell1 = document.createElement('td');
         let cell2 = document.createElement('td');
@@ -47,7 +43,6 @@ function showAllScores() {
         cell1.append(text1);
         cell2.append(text2);
         ligne.append(cell1, cell2);
-        console.log(tr);
 
         document.querySelector('#highscores table tbody').append(ligne);
         round += 1;

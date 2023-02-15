@@ -16,7 +16,7 @@ let stopInterval;
 // game state
 let gameOn = false;
 let scoreStorage = localStorage;
-let pointAlien = 100;
+let pointAlien = 10;
 let score = 0;
 function inRange(x, min, max) {
     return (x - min) * (x - max) <= 0;
@@ -117,7 +117,6 @@ async function gameLoop() {
         if (enemyFire) {
             enemyShoot();
         }
-        console.log(document.querySelector('.timer').textContent);
 
         await timer(timeRate);
         updateGrid();
@@ -125,11 +124,10 @@ async function gameLoop() {
     clearInterval(stopInterval);
 
     if (aliens.length === 0) {
-        console.log(score);
-        score =
-            (100000 / parseInt(document.querySelector('.timer').textContent)) *
-            score;
-        console.log(score);
+        score = Math.round(
+            (1000 / parseFloat(document.querySelector('.timer').textContent)) *
+                score
+        );
     }
     checkScores(score);
 }
@@ -153,28 +151,28 @@ function gameStart(difficulty) {
             enemyFire = false;
             timeRate = 1000;
             bombs = 3;
-            pointAlien = 100;
+            pointAlien = 10;
             break;
         case 2:
             diff = 2;
             enemyFire = false;
             timeRate = 600;
             bombs = 2;
-            pointAlien = 150;
+            pointAlien = 15;
             break;
         case 3:
             diff = 3;
             enemyFire = true;
             timeRate = 600;
             bombs = 1;
-            pointAlien = 200;
+            pointAlien = 20;
             break;
         case 4:
             diff = 4;
             enemyFire = true;
             timeRate = 300;
             bombs = 0;
-            pointAlien = 300;
+            pointAlien = 30;
             break;
         default:
             return;

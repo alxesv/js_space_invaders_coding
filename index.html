@@ -5,11 +5,17 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Document</title>
         <link rel="stylesheet" href="style.css" />
+        <link rel="stylesheet" href="title.css" />
+
     </head>
-    <body>
-        <h1>Space Invader</h1>
+    <body >
+        <!-- <div id="container"> -->
+        <div id="title"> 
+            <h1>Space Invader</h1>
+            <button id="play">Jouer</button>
+        </div>
         <div class="option_buttons">
-            <button id="hardreset" style="position:absolute; left:0; top:0;">Hardreset</button>
+            <button id="hardreset" style="position:absolute; left:0; top:0; display: none;">Hardreset</button>
             <button id="showSkillTree">Skill Tree</button>
             <button id="resetSkills">Reset skills</button>
             <button id="btnScores">Highscores</button>
@@ -66,6 +72,6 @@
     <script src="js/actions.js"></script>
     <script src="js/skill_tree.js"></script>
     <script src="js/score.js"></script>
-    
+<!-- </div> -->
 </body>
 </html>

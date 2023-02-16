@@ -1,5 +1,12 @@
 body {
     background: url('ressources/background.jpg') no-repeat center center fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin: 0;
+    width: auto;
+    height: 612px;
 }
 
 .grille {
@@ -13,7 +20,9 @@ body {
     background: url(ressources/background-black.png);
     animation: background-defile 5s linear infinite;
 }
-
+/* #title {
+   
+} */
 @keyframes background-defile {
     from {
         background-position-y: 0px;
@@ -98,7 +107,7 @@ h3 {
     display: none;
 }
 .diff_choice {
-    display: flex;
+    display: none;
     flex-direction: column;
     align-items: center;
     justify-content: center;
@@ -112,7 +121,6 @@ h3 {
     border-radius: 4px;
     text-align: center;
     padding: 50px;
-    width: 70%;
 }
 .diff_choice #highscores {
     display: none;
@@ -214,8 +222,17 @@ h3 {
 .skill:not(.unlocked) button:hover {
     background-color: #4a2cc3;
 }
+#hardreset {
+    border: #ccc;
 
+    cursor: pointer;
+}
+#hardreset:hover {
+    cursor: pointer;
+    background-color: #b9c0c4;
+}
 #showSkillTree {
+    display: none;
     background-color: #469ada;
     position: absolute;
     top: 0;
@@ -228,6 +245,7 @@ h3 {
     color: #fff;
 }
 #resetSkills {
+    display: none;
     background-color: #3b3838;
     color: #fff;
     border: #ccc;
@@ -273,6 +291,7 @@ h3 {
     display: none;
 }
 #btnScores {
+    display: none;
     background-color: coral;
     position: absolute;
     top: 20%;
@@ -291,4 +310,54 @@ button {
 h1 {
     text-align: center;
     color: #fff;
+}
+#easy {
+    background-color: rgb(111, 219, 69);
+}
+#easy:hover {
+    background-color: rgb(68, 132, 42);
+}
+#normal {
+    background-color: rgb(232, 148, 30);
+}
+#normal:hover {
+    background-color: rgb(169, 107, 20);
+}
+#hard {
+    background-color: rgb(231, 90, 51);
+}
+#hard:hover {
+    background-color: rgb(155, 61, 35);
+}
+#veryhard {
+    background-color: rgb(165, 51, 231);
+}
+#veryhard:hover {
+    background-color: rgb(100, 32, 140);
+}
+#replay {
+    background-color: rgb(51, 135, 231);
+}
+#replay:hover {
+    background-color: rgb(29, 80, 138);
+}
+
+#veryhard,
+#hard,
+#normal,
+#easy,
+#replay {
+    color: rgb(255, 255, 255);
+    cursor: pointer;
+    transform: scale(1);
+    transition-property: calc(10 * 2);
+    transition-duration: 400ms;
+    margin: 0 5px;
+}
+#veryhard:hover,
+#hard:hover,
+#normal:hover,
+#easy:hover,
+#replay:hover {
+    transform: scale(1.3);
 }

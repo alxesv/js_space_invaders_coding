@@ -1,0 +1,40 @@
+#title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-transform: uppercase;
+    font-size: clamp(20px, 8vw, 100px);
+    font-weight: 900;
+}
+#title h1 {
+    color: transparent;
+    animation: txt-appareance 3s forwards;
+}
+#play {
+    animation: btn-appareance 3s forwards;
+
+    background-color: rgb(231, 90, 51);
+    color: rgb(255, 255, 255);
+    cursor: pointer;
+    transition-property: calc(10 * 2);
+    transition-duration: 400ms;
+    margin: 0 5px;
+}
+#play:hover {
+    background-color: rgb(155, 61, 35);
+}
+@keyframes txt-appareance {
+    100% {
+        color: rgb(252, 245, 245);
+    }
+}
+
+@keyframes btn-appareance {
+    0% {
+        transform: scale(0);
+    }
+    100% {
+        transform: scale(2);
+    }
+}

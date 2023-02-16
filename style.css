@@ -1,5 +1,12 @@
 body {
     background: url('ressources/background.jpg') no-repeat center center fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin: 0;
+    width: auto;
+    height: 612px;
 }
 
 .grille {
@@ -13,7 +20,9 @@ body {
     background: url(ressources/background-black.png);
     animation: background-defile 5s linear infinite;
 }
-
+/* #title {
+   
+} */
 @keyframes background-defile {
     from {
         background-position-y: 0px;
@@ -98,17 +107,20 @@ h3 {
     display: none;
 }
 .diff_choice {
-    display: flex;
+    display: none;
     flex-direction: column;
     align-items: center;
     justify-content: center;
 }
 .diff_choice div {
+    box-sizing: border-box;
     display: inline-block;
+    margin-top: 140px;
     background-color: antiquewhite;
     padding: 10px;
     border-radius: 4px;
     text-align: center;
+    padding: 50px;
 }
 .diff_choice #highscores {
     display: none;
@@ -138,18 +150,18 @@ h3 {
     border-radius: 4px;
     width: 100px;
     position: absolute;
-    top : 40%;
-    left : 0;
+    top: 40%;
+    left: 0;
     font-size: 1.2rem;
 }
-@media screen and (min-width:1024px){
-    .controls{
+@media screen and (min-width: 1024px) {
+    .controls {
         width: 150px;
         left: 5%;
     }
 }
-@media screen and (min-width:1440px){
-    .controls{
+@media screen and (min-width: 1440px) {
+    .controls {
         width: 250px;
         left: 10%;
     }
@@ -168,10 +180,11 @@ h3 {
     display: flex;
     flex-wrap: wrap;
     margin: 1em;
-  }
-  
-  /* Style for each skill div */
-  .skill, .skill_points {
+}
+
+/* Style for each skill div */
+.skill,
+.skill_points {
     background-color: antiquewhite;
     border: 1px solid #ccc;
     border-radius: 0.5em;
@@ -183,20 +196,20 @@ h3 {
     padding: 1em;
     color: #000;
     font-size: 0.7rem;
-  }
-  
-  /* Style for the skill name heading */
-  .skill_tree h3 {
+}
+
+/* Style for the skill name heading */
+.skill_tree h3 {
     font-size: 1.5em;
     margin-top: 0;
     color: #000;
-  }
-  .skill_tree p {
+}
+.skill_tree p {
     margin: 0;
-  }
-  
-  /* Style for the unlock button */
-  .skill button {
+}
+
+/* Style for the unlock button */
+.skill button {
     background-color: #469ada;
     border: none;
     border-radius: 0.5em;
@@ -205,37 +218,63 @@ h3 {
     font-size: 1em;
     margin-top: 1em;
     padding: 0.5em 1em;
-  }
-  .skill:not(.unlocked) button:hover {
+}
+.skill:not(.unlocked) button:hover {
     background-color: #4a2cc3;
-  }
-  
-  #showSkillTree {
-    position:absolute;
+}
+#hardreset {
+    border: #ccc;
+
+    cursor: pointer;
+}
+#hardreset:hover {
+    cursor: pointer;
+    background-color: #b9c0c4;
+}
+#showSkillTree {
+    display: none;
+    background-color: #469ada;
+    position: absolute;
     top: 0;
     right: 0;
-  }
-  #resetSkills {
-    position:absolute;
-    top: 5%;
+}
+#showSkillTree:hover,
+#showSkillTree:active {
+    background-color: #2f638b;
+    cursor: pointer;
+    color: #fff;
+}
+#resetSkills {
+    display: none;
+    background-color: #3b3838;
+    color: #fff;
+    border: #ccc;
+    position: absolute;
+    top: 10%;
     right: 0;
-  }
-  .skill_points {
+}
+#resetSkills:hover,
+#resetSkills:active {
+    background-color: #585c5e;
+    cursor: pointer;
+    color: rgb(0, 0, 0);
+}
+.skill_points {
     max-height: 30px;
-  }
-  .line {
+}
+.line {
     background: url(ressources/arrow.png);
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
     width: 25px;
     margin: 0 -5px;
-  }
-  .unlocked button {
+}
+.unlocked button {
     background-color: #4caf50;
     cursor: default;
-  }
-  .diff_choice #highscores {
+}
+.diff_choice #highscores {
     background-color: antiquewhite;
     padding: 10px;
     border-radius: 4px;
@@ -250,4 +289,75 @@ h3 {
     margin: 20px 0;
     color: #fff;
     display: none;
+}
+#btnScores {
+    display: none;
+    background-color: coral;
+    position: absolute;
+    top: 20%;
+    right: 0;
+}
+#btnScores:hover {
+    background-color: rgba(175, 89, 58, 0.767);
+    cursor: pointer;
+    color: #fff;
+}
+button {
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+}
+h1 {
+    text-align: center;
+    color: #fff;
+}
+#easy {
+    background-color: rgb(111, 219, 69);
+}
+#easy:hover {
+    background-color: rgb(68, 132, 42);
+}
+#normal {
+    background-color: rgb(232, 148, 30);
+}
+#normal:hover {
+    background-color: rgb(169, 107, 20);
+}
+#hard {
+    background-color: rgb(231, 90, 51);
+}
+#hard:hover {
+    background-color: rgb(155, 61, 35);
+}
+#veryhard {
+    background-color: rgb(165, 51, 231);
+}
+#veryhard:hover {
+    background-color: rgb(100, 32, 140);
+}
+#replay {
+    background-color: rgb(51, 135, 231);
+}
+#replay:hover {
+    background-color: rgb(29, 80, 138);
+}
+
+#veryhard,
+#hard,
+#normal,
+#easy,
+#replay {
+    color: rgb(255, 255, 255);
+    cursor: pointer;
+    transform: scale(1);
+    transition-property: calc(10 * 2);
+    transition-duration: 400ms;
+    margin: 0 5px;
+}
+#veryhard:hover,
+#hard:hover,
+#normal:hover,
+#easy:hover,
+#replay:hover {
+    transform: scale(1.3);
 }

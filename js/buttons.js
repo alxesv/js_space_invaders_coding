@@ -21,14 +21,29 @@ document.querySelectorAll('.diff_choice button').forEach((button) => {
 });
 document.querySelector('#btnScores').addEventListener('click', () => {
     const highScores = JSON.parse(scoreStorage.getItem('scores')) ?? [];
-
+    document.querySelector('.diff_choice div').style.display =
+        document.querySelector('.diff_choice div').style.display === 'none'
+            ? 'inline-block'
+            : 'none';
+    document.querySelector('#btnScores').innerHTML =
+        document.querySelector('.diff_choice div').style.display === 'none'
+            ? 'Difficulties'
+            : 'Highscores';
     showAllScores();
     document.querySelector('#highscores #tab-score').style.display =
-        highScores === 0 ? 'none' : 'table';
+        highScores.length === 0 ? 'none' : 'table';
     document.querySelector('#highscores').style.display =
         document.querySelector('#highscores').style.display === 'none'
             ? 'block'
             : 'none';
+});
+document.querySelector('#play').addEventListener('click', () => {
+    document.querySelector('#title').style.display = 'none';
+    document.querySelector('.diff_choice').style.display = 'flex';
+    document.querySelector('#resetSkills').style.display = 'inline-block';
+    document.querySelector('#showSkillTree').style.display = 'inline-block';
+    document.querySelector('#btnScores').style.display = 'inline-block';
+    document.querySelector('#hardreset').style.display = 'inline-block';
 });
 // Bouton replay
 document.querySelector('#replay').addEventListener('click', () => {
@@ -54,6 +69,8 @@ document.querySelector('#replay').addEventListener('click', () => {
     document.querySelector('#showSkillTree').style.display = 'block';
     document.querySelector('#hardreset').style.display = 'block';
     document.querySelector('#resetSkills').style.display = 'block';
+    document.querySelector('#btnScores').style.display = 'inline-block';
+
     showAllScores();
     updateSkillPointsCounter();
 });
@@ -123,16 +140,15 @@ document.addEventListener('keydown', (e) => {
     updateGrid();
 });
 
-
 document.querySelector('#hardreset').addEventListener('click', () => {
     localStorage.clear();
     location.reload();
 });
 
 document.querySelector('#showSkillTree').addEventListener('click', () => {
-    if(skillTreeDiv.style.display === 'none'){
+    if (skillTreeDiv.style.display === 'none') {
         skillTreeDiv.style.display = 'flex';
-    }else{
+    } else {
         skillTreeDiv.style.display = 'none';
     }
 });

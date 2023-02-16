@@ -181,10 +181,9 @@ function resetSkills(){
             totalSkillPoints += skill.cost;
         }
     }
-    localStorage.removeItem("unlockedSkills");
+    unlockedSkills = [];
     initiateSkillTree(totalSkillPoints);
 }
-
 if(!localStorage.getItem("unlockedSkills")){
     initiateSkillTree();
 }

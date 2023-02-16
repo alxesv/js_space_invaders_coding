@@ -155,5 +155,6 @@ document.querySelector('#showSkillTree').addEventListener('click', () => {
 
 document.querySelector('#resetSkills').addEventListener('click', () => {
     resetSkills();
-    location.reload();
+    skillPoints = parseInt(localStorage.getItem('skillPoints'));
+    updateSkillTree();
 });

@@ -283,6 +283,12 @@ h3 {
 }
 #tab-score {
     display: none;
+    border-collapse: collapse;
+}
+
+td {
+    padding: 5px;
+    border: 1px solid #000;
 }
 .timer {
     text-align: center;

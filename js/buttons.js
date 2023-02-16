@@ -1,3 +1,4 @@
+let audioTheme = new Audio('../ressources/audio/Game-Over.mp3');
 // Boutons de difficulté
 document.querySelectorAll('.diff_choice button').forEach((button) => {
     button.addEventListener('click', () => {
@@ -38,6 +39,7 @@ document.querySelector('#btnScores').addEventListener('click', () => {
             : 'none';
 });
 document.querySelector('#play').addEventListener('click', () => {
+    audioTheme.play();
     document.querySelector('#title').style.display = 'none';
     document.querySelector('.diff_choice').style.display = 'flex';
     document.querySelector('#resetSkills').style.display = 'inline-block';
@@ -52,6 +54,12 @@ document.querySelector('#replay').addEventListener('click', () => {
     vaisseau = 390;
     aliens = [];
     dead = false;
+    audioBomb.pause();
+    audioLaser.pause();
+    audioLaserAlien.pause();
+    audioVictory.pause();
+    audioTheme.play();
+    song = false;
     while (document.querySelector('.grille').firstChild) {
         document
             .querySelector('.grille')

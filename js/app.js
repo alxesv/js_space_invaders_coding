@@ -1,5 +1,7 @@
 let htmlGrille;
 let aliens = [];
+let audioVictory = new Audio('../ressources/audio/Dance.mp3');
+
 // speed of the aliens (in ms), the lower the faster
 let timeRate;
 // cooldown between each shot (in ms), the lower the faster
@@ -28,7 +30,7 @@ let timeFreeze;
 let timeFreezeOn = false;
 let timeFreezeDuration;
 let superShot;
-
+let song = false;
 function inRange(x, min, max) {
     return (x - min) * (x - max) <= 0;
 }
@@ -114,6 +116,9 @@ function gameLoop() {
     let border = false;
     let skipBorder = false;
     let gameInterval = setInterval(() => {
+        if (song) {
+            audioVictory.play();
+        }
         for (let alien of aliens) {
             if (htmlGrille[alien].getAttribute('data') == 'right') {
                 alienDir = false;
@@ -138,6 +143,8 @@ function gameLoop() {
             clearInterval(gameInterval);
             clearInterval(stopInterval);
             if (aliens.length === 0) {
+                audioTheme.pause();
+                audioVictory.play();
                 score = Math.round(
                     (1000 /
                         parseFloat(

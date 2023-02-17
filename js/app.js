@@ -61,21 +61,37 @@ function initGame(level = 1) {
     switch (level) {
         case 1:
             for (i = 0; i < 60; i++) {
-                if (inRange(i, 4, 15) || inRange(i, 24, 35) || inRange(i, 44, 55)) {
+                if (
+                    inRange(i, 4, 15) ||
+                    inRange(i, 24, 35) ||
+                    inRange(i, 44, 55)
+                ) {
                     aliens.push(i);
                 }
             }
             break;
         case 2:
             for (i = 0; i < 160; i++) {
-                if (inRange(i, 2, 17) || inRange(i, 23, 36) || inRange(i, 44, 55) || inRange(i, 65, 74) || inRange(i, 86, 93) || inRange(i, 107, 112) || inRange(i, 128, 131) || inRange(i, 149, 150)) {
+                if (
+                    inRange(i, 2, 17) ||
+                    inRange(i, 23, 36) ||
+                    inRange(i, 44, 55) ||
+                    inRange(i, 65, 74) ||
+                    inRange(i, 86, 93) ||
+                    inRange(i, 107, 112) ||
+                    inRange(i, 128, 131) ||
+                    inRange(i, 149, 150)
+                ) {
                     aliens.push(i);
                 }
             }
             break;
         case 3:
             for (i = 0; i < 120; i++) {
-                if (i % 2 !== 0 && !(inRange(i, 40, 59) || inRange(i, 100, 119))){
+                if (
+                    i % 2 !== 0 &&
+                    !(inRange(i, 40, 59) || inRange(i, 100, 119))
+                ) {
                     aliens.push(i);
                 }
             }
@@ -124,15 +140,17 @@ function checkGameOver() {
         if (aliens.length === 0) {
             result_message.innerHTML = 'You Win';
             result.style.display = 'block';
-            if(currentLevel < 3) {
+            if (currentLevel < 3) {
                 setTimeout(() => {
-                    document.querySelector('#continue').style.display = 'inline-block';
+                    document.querySelector('#continue').style.display =
+                        'inline-block';
                 }, 1000);
             }
             setTimeout(() => {
-                document.querySelector('#replay').style.display = 'inline-block';
+                document.querySelector('#replay').style.display =
+                    'inline-block';
             }, 1000);
-            skillPoints += (diff - 1) + (currentLevel-1);
+            skillPoints += diff - 1 + (currentLevel - 1);
             localStorage.setItem('skillPoints', skillPoints);
             updateSkillPointsCounter();
             gameOn = false;
@@ -145,7 +163,8 @@ function checkGameOver() {
             result_message.innerHTML = 'You Lose';
             result.style.display = 'block';
             setTimeout(() => {
-                document.querySelector('#replay').style.display = 'inline-block';
+                document.querySelector('#replay').style.display =
+                    'inline-block';
             }, 1000);
             gameOn = false;
             return true;
@@ -183,10 +202,12 @@ function gameLoop() {
         if (enemyFire) {
             enemyShoot();
         }
-        if(currentLevel === 3) {
+        if (currentLevel === 3) {
             infernoBomb();
         }
         if (checkGameOver()) {
+            document.querySelector('#giveUp').style.display = 'none';
+
             clearInterval(gameInterval);
             clearInterval(stopInterval);
             if (aliens.length === 0) {
@@ -229,6 +250,7 @@ function gameStart(difficulty, level = 1) {
     document.querySelector('.game').style.display = 'block';
     document.querySelector('#params').style.display = 'none';
     document.querySelector('#paramsBtn').style.display = 'none';
+    document.querySelector('#giveUp').style.display = 'inline-block';
     skillTreeDiv.style.display = 'none';
     switch (difficulty) {
         case 1:
@@ -293,7 +315,7 @@ function gameStart(difficulty, level = 1) {
         document.querySelector('#countdown').innerHTML = i;
         i--;
     }, 1000);
-    if(currentLevel === 3) {
+    if (currentLevel === 3) {
         currentLevel = 1;
     }
 }

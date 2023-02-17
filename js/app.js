@@ -23,6 +23,7 @@ let bombs;
 // difficulty
 let diff;
 let stopInterval;
+let currentLevel;
 // game state
 let gameOn = false;
 let scoreStorage = localStorage;
@@ -45,7 +46,7 @@ function inRange(x, min, max) {
     return (x - min) * (x - max) <= 0;
 }
 // Initialisation du jeu
-function initGame() {
+function initGame(level = 1) {
     document.querySelector('.score').style.display = 'block';
     for (let i = 0; i < 400; i++) {
         let div = document.createElement('div');
@@ -57,13 +58,32 @@ function initGame() {
         document.querySelector('.grille').append(div);
     }
     htmlGrille = document.querySelectorAll('.grille div');
-    for (i = 0; i < 60; i++) {
-        if (inRange(i, 4, 15) || inRange(i, 24, 35) || inRange(i, 44, 55)) {
-            aliens.push(i);
-        }
+    switch (level) {
+        case 1:
+            for (i = 0; i < 60; i++) {
+                if (inRange(i, 4, 15) || inRange(i, 24, 35) || inRange(i, 44, 55)) {
+                    aliens.push(i);
+                }
+            }
+            break;
+        case 2:
+            for (i = 0; i < 160; i++) {
+                if (inRange(i, 2, 17) || inRange(i, 23, 36) || inRange(i, 44, 55) || inRange(i, 65, 74) || inRange(i, 86, 93) || inRange(i, 107, 112) || inRange(i, 128, 131) || inRange(i, 149, 150)) {
+                    aliens.push(i);
+                }
+            }
+            break;
+        case 3:
+            for (i = 0; i < 120; i++) {
+                if (i % 2 !== 0 && !(inRange(i, 40, 59) || inRange(i, 100, 119))){
+                    aliens.push(i);
+                }
+            }
+            break;
     }
     htmlGrille[vaisseau].classList.add('tireur');
     updateGrid();
+    currentLevel = level;
 }
 
 // Mise à jour de la grille
@@ -82,6 +102,7 @@ function updateGrid() {
             htmlGrille[i].classList.remove('alien');
         }
         if (i === vaisseau) {
+            htmlGrille[vaisseau].classList.remove('infernoBomb');
             if (!shieldOn) {
                 htmlGrille[vaisseau].classList.add('tireur');
             } else {
@@ -103,9 +124,18 @@ function checkGameOver() {
         if (aliens.length === 0) {
             result_message.innerHTML = 'You Win';
             result.style.display = 'block';
-            skillPoints += diff - 1;
+            if(currentLevel < 3) {
+                setTimeout(() => {
+                    document.querySelector('#continue').style.display = 'inline-block';
+                }, 1000);
+            }
+            setTimeout(() => {
+                document.querySelector('#replay').style.display = 'inline-block';
+            }, 1000);
+            skillPoints += (diff - 1) + (currentLevel-1);
             localStorage.setItem('skillPoints', skillPoints);
             updateSkillPointsCounter();
+            gameOn = false;
             return true;
         } else if (
             aliens.includes(vaisseau) ||
@@ -114,6 +144,10 @@ function checkGameOver() {
         ) {
             result_message.innerHTML = 'You Lose';
             result.style.display = 'block';
+            setTimeout(() => {
+                document.querySelector('#replay').style.display = 'inline-block';
+            }, 1000);
+            gameOn = false;
             return true;
         }
     }
@@ -149,6 +183,9 @@ function gameLoop() {
         if (enemyFire) {
             enemyShoot();
         }
+        if(currentLevel === 3) {
+            infernoBomb();
+        }
         if (checkGameOver()) {
             clearInterval(gameInterval);
             clearInterval(stopInterval);
@@ -183,7 +220,7 @@ function timerGame() {
     return { interval };
 }
 // Lance le jeu
-function gameStart(difficulty) {
+function gameStart(difficulty, level = 1) {
     document.querySelector('.diff_choice').style.display = 'none';
     document.querySelector('#showSkillTree').style.display = 'none';
     document.querySelector('#hardreset').style.display = 'none';
@@ -247,7 +284,7 @@ function gameStart(difficulty) {
         if (i === 0) {
             const { interval } = timerGame();
             stopInterval = interval;
-            initGame();
+            initGame(level);
             gameLoop();
             gameOn = true;
             clearInterval(startInterval);
@@ -256,4 +293,7 @@ function gameStart(difficulty) {
         document.querySelector('#countdown').innerHTML = i;
         i--;
     }, 1000);
+    if(currentLevel === 3) {
+        currentLevel = 1;
+    }
 }

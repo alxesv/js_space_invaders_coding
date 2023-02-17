@@ -50,7 +50,6 @@ function activateShield() {
     }
 }
 // Tir des aliens et mort du vaisseau
-
 function enemyShoot() {
     if (!timeFreezeOn) {
         let randomAlien = aliens[Math.floor(Math.random() * aliens.length)];
@@ -214,4 +213,71 @@ function shoot(type = 1) {
     setTimeout(() => {
         cooldown = false;
     }, cooldownRate);
+}
+
+
+function infernoBombTarget(){
+    let target;
+    let random = Math.floor(Math.random() * ((htmlGrille.length-20) - (htmlGrille.length-60)) + (htmlGrille.length-60));
+    if(random % 20 === 19){
+        target = random - 1;
+    }else if(random % 20 === 0){
+        target = random + 1;
+    }else{
+        target = random;
+    }
+    return target;
+}
+// Bombe du niveau 3
+function infernoBomb(){
+    let chance = Math.floor(Math.random() * 100);
+    if(inRange(chance, 41, 45)){
+        let infernoBomb = infernoBombTarget();
+        const areaBomb = [
+            infernoBomb,
+            infernoBomb + 1,
+            infernoBomb - 1,
+            infernoBomb + 20,
+            infernoBomb - 20,
+            infernoBomb + 21,
+            infernoBomb - 21,
+            infernoBomb + 19,
+            infernoBomb - 19,
+        ];
+        for (let i = 0; i < areaBomb.length; i++) {
+            const pos = areaBomb[i];
+            if(htmlGrille[pos]){
+                htmlGrille[pos].classList.add('preInfernoBomb');
+            }
+        }
+        setTimeout(() => {
+            for (let i = 0; i < areaBomb.length; i++) {
+                const pos = areaBomb[i];
+                if(htmlGrille[pos]){
+                    htmlGrille[pos].classList.remove('preInfernoBomb');
+                    htmlGrille[pos].classList.add('infernoBomb');
+                if(htmlGrille[pos].classList.contains('tireur')){
+                    if(shieldOn){
+                        shieldOn = false;
+                        htmlGrille[pos].classList.remove('.shield');
+                        htmlGrille[pos].classList.remove('.infernoBomb');
+                        return;
+                    }else{
+                        dead = true;
+                        htmlGrille[pos].classList.remove('tireur');
+                        for(let preBomb of areaBomb){
+                            if(htmlGrille[preBomb] && htmlGrille[preBomb].classList.contains('preInfernoBomb')){
+                            htmlGrille[preBomb].classList.remove('preInfernoBomb');
+                            }
+                        }
+                        return;
+                    }
+                }
+                setTimeout(() => {
+                        htmlGrille[pos].classList.remove('infernoBomb'); 
+                }, 500);
+            }
+        }
+        }, 1500);
+    }
 }

@@ -91,8 +91,8 @@ document.querySelector('#play').addEventListener('click', () => {
 
     document.querySelector('#hardreset').style.display = 'inline-block';
 });
-// Bouton replay
-document.querySelector('#replay').addEventListener('click', () => {
+
+function replayBtn(){
     score = 0;
     gameOn = false;
     vaisseau = 390;
@@ -116,6 +116,8 @@ document.querySelector('#replay').addEventListener('click', () => {
     let result_message = document.querySelector('.result_message');
     result_message.innerHTML = '';
     result.style.display = 'none';
+    document.querySelector('#replay').style.display = 'none';
+    document.querySelector('#continue').style.display = 'none';
     document.querySelector('.diff_choice').style.display = 'flex';
     document.querySelector('.game').style.display = 'none';
     document.querySelector('.score').style.display = 'none';
@@ -126,9 +128,12 @@ document.querySelector('#replay').addEventListener('click', () => {
     document.querySelector('#resetSkills').style.display = 'block';
     document.querySelector('#btnScores').style.display = 'inline-block';
     document.querySelector('#paramsBtn').style.display = 'inline-block';
-
     showAllScores();
     updateSkillPointsCounter();
+}
+// Bouton replay
+document.querySelector('#replay').addEventListener('click', () => {
+    replayBtn();
 });
 
 // Controles
@@ -215,5 +220,19 @@ document.querySelector('#showSkillTree').addEventListener('click', () => {
 
 document.querySelector('#resetSkills').addEventListener('click', () => {
     resetSkills();
-    location.reload();
+    skillPoints = parseInt(localStorage.getItem('skillPoints'));
+    updateSkillTree();
+});
+
+// Bouton continuer
+document.querySelector('#continue').addEventListener('click', () => {
+    replayBtn();
+    switch(currentLevel){
+        case 1:
+            gameStart(diff, 2);
+            break;
+        case 2:
+            gameStart(diff, 3);
+            break;
+    }
 });

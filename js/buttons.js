@@ -92,7 +92,7 @@ document.querySelector('#play').addEventListener('click', () => {
     document.querySelector('#hardreset').style.display = 'inline-block';
 });
 
-function replayBtn(){
+function replayBtn() {
     score = 0;
     gameOn = false;
     vaisseau = 390;
@@ -128,14 +128,16 @@ function replayBtn(){
     document.querySelector('#resetSkills').style.display = 'block';
     document.querySelector('#btnScores').style.display = 'inline-block';
     document.querySelector('#paramsBtn').style.display = 'inline-block';
-    showAllScores();
     updateSkillPointsCounter();
 }
 // Bouton replay
 document.querySelector('#replay').addEventListener('click', () => {
     replayBtn();
+    showAllScores();
 });
-
+document.querySelector('#giveUp').addEventListener('click', () => {
+    location.reload();
+});
 // Controles
 document.addEventListener('keydown', (e) => {
     if (checkGameOver() || !gameOn) {
@@ -227,7 +229,7 @@ document.querySelector('#resetSkills').addEventListener('click', () => {
 // Bouton continuer
 document.querySelector('#continue').addEventListener('click', () => {
     replayBtn();
-    switch(currentLevel){
+    switch (currentLevel) {
         case 1:
             gameStart(diff, 2);
             break;

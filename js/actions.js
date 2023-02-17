@@ -53,7 +53,7 @@ function enemyShoot(){
             clearInterval(laserInterval);
             return;
         }
-        if (laser === vaisseau && !shieldOn && gameOn) {
+        if (laser === vaisseau && !shieldOn) {
             htmlGrille[vaisseau].classList.remove('tireur');
             htmlGrille[vaisseau].classList.remove('enemy_laser');
             htmlGrille[vaisseau].classList.add('boom');
@@ -203,7 +203,7 @@ function infernoBombTarget(){
 // Bombe du niveau 3
 function infernoBomb(){
     let chance = Math.floor(Math.random() * 100);
-    if(inRange(chance, 41, 43)){
+    if(inRange(chance, 41, 80)){
         let infernoBomb = infernoBombTarget();
         const areaBomb = [
             infernoBomb,

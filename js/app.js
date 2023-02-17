@@ -151,6 +151,7 @@ function gameLoop() {
     let skipBorder = false;
     let gameInterval = setInterval(() => {
         for (let alien of aliens) {
+            if(htmlGrille[alien]){
             if (htmlGrille[alien].getAttribute('data') == 'right') {
                 alienDir = false;
                 border = true;
@@ -158,6 +159,7 @@ function gameLoop() {
                 alienDir = true;
                 border = true;
             }
+        }
         }
         if (border && !skipBorder) {
             moveAliens(true, 20);

@@ -112,9 +112,7 @@ function checkGameOver() {
         if (aliens.length === 0) {
             result_message.innerHTML = 'You Win';
             result.style.display = 'block';
-            if(currentLevel > 2) {
-                currentLevel = 1;
-            }else{
+            if(currentLevel < 3) {
                 setTimeout(() => {
                     document.querySelector('#continue').style.display = 'inline-block';
                 }, 1000);
@@ -276,4 +274,7 @@ function gameStart(difficulty, level = 1) {
         document.querySelector('#countdown').innerHTML = i;
         i--;
     }, 1000);
+    if(currentLevel === 3) {
+        currentLevel = 1;
+    }
 }

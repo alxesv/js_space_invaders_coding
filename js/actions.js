@@ -203,7 +203,7 @@ function infernoBombTarget(){
 // Bombe du niveau 3
 function infernoBomb(){
     let chance = Math.floor(Math.random() * 100);
-    if(inRange(chance, 41, 80)){
+    if(inRange(chance, 41, 45)){
         let infernoBomb = infernoBombTarget();
         const areaBomb = [
             infernoBomb,

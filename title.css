@@ -38,3 +38,18 @@
         transform: scale(2);
     }
 }
+
+.result button {
+    animation: btn-appareance2 2s forwards;
+    transition-property: calc(10 * 2);
+    transition-duration: 400ms;
+}
+
+@keyframes btn-appareance2 {
+    0% {
+        transform: scale(0);
+    }
+    100% {
+        transform: scale(1);
+    }
+}

@@ -136,7 +136,7 @@ document.querySelector('#replay').addEventListener('click', () => {
     showAllScores();
 });
 document.querySelector('#giveUp').addEventListener('click', () => {
-    replayBtn();
+    location.reload();
 });
 // Controles
 document.addEventListener('keydown', (e) => {

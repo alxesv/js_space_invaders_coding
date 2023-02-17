@@ -244,6 +244,48 @@ h3 {
     cursor: pointer;
     color: #fff;
 }
+#paramsBtn {
+    display: none;
+    background-color: #fffc47;
+    position: absolute;
+    top: 10%;
+    left: 0;
+}
+#paramsBtn:hover,
+#paramsBtn:active {
+    background-color: #b0ae2f;
+    cursor: pointer;
+    color: #fff;
+}
+#params {
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    background-color: antiquewhite;
+    padding: 10px;
+    border-radius: 4px;
+    text-align: center;
+    margin-top: 20px;
+}
+#params div {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: antiquewhite;
+    padding: 10px;
+    border-radius: 4px;
+    text-align: center;
+    margin-top: 20px;
+}
+#music,
+#sound-effect {
+    background-color: #4caf50;
+    margin: 0 10px;
+    cursor: pointer;
+}
+/* #Music:hover {
+    background-color: #cb3c2f;
+} */
 #resetSkills {
     display: none;
     background-color: #3b3838;
@@ -308,6 +350,7 @@ td {
     cursor: pointer;
     color: #fff;
 }
+
 button {
     padding: 10px;
     border-radius: 10px;

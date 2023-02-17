@@ -1,9 +1,3 @@
-let audioBomb = new Audio('../ressources/audio/boom.mp3');
-let audioLaser = new Audio('../ressources/audio/laser.mp3');
-let audioLaserAlien = new Audio('../ressources/audio/laserAlien.mp3');
-let audioDes = new Audio('../ressources/audio/desintegration.mp3');
-let audioFreeze = new Audio('../ressources/audio/theWorld.mp3');
-
 // Déplacement des aliens
 function moveAliens(right, step) {
     if (!timeFreezeOn) {
@@ -22,8 +16,14 @@ function moveAliens(right, step) {
 // Fonction freeze time
 function activateFreezeTime() {
     if (!timeFreezeOn && timeFreeze > 0) {
-        audioTheme.pause();
-        audioFreeze.play();
+        if (audioEffect && songOn) {
+            audioTheme.pause();
+            audioFreeze.play();
+        }
+        if (audioEffect) {
+            audioFreeze.play();
+        }
+
         timeFreezeOn = true;
         timeFreeze--;
         freezeDisplay.innerHTML = `(${timeFreeze})`;
@@ -55,7 +55,9 @@ function enemyShoot() {
     if (!timeFreezeOn) {
         let randomAlien = aliens[Math.floor(Math.random() * aliens.length)];
         let laser = randomAlien + 20;
-        audioLaserAlien.play();
+        if (audioEffect) {
+            audioLaserAlien.play();
+        }
         let laserInterval = setInterval(() => {
             if (laser === vaisseau && shieldOn) {
                 htmlGrille[vaisseau].classList.remove('shield');
@@ -68,7 +70,9 @@ function enemyShoot() {
                 htmlGrille[vaisseau].classList.remove('tireur');
                 htmlGrille[vaisseau].classList.remove('enemy_laser');
                 htmlGrille[vaisseau].classList.add('boom');
-                audioBomb.play();
+                if (audioEffect) {
+                    audioBomb.play();
+                }
                 clearInterval(laserInterval);
                 dead = true;
                 return;
@@ -114,7 +118,9 @@ function shoot(type = 1) {
                     return;
                 }
                 if (aliens.includes(bomb)) {
-                    audioBomb.play();
+                    if (audioEffect) {
+                        audioBomb.play();
+                    }
 
                     cell.classList.remove('bomb');
                     cell.classList.add('boom');
@@ -148,9 +154,11 @@ function shoot(type = 1) {
             bombDisplay.innerHTML = `(${bombs})`;
         } else if (type === 1) {
             let laser = vaisseau - 20;
-            let laserInterval = setInterval(() => {
+            if (audioEffect) {
                 audioLaser.play();
+            }
 
+            let laserInterval = setInterval(() => {
                 if (laser < 20) {
                     clearInterval(laserInterval);
                     htmlGrille[laser].classList.remove('laser');
@@ -176,7 +184,9 @@ function shoot(type = 1) {
                     }
                 } else {
                     if (aliens.includes(laser)) {
-                        audioDes.play();
+                        if (audioEffect) {
+                            audioDes.play();
+                        }
                         score += pointAlien;
                         htmlGrille[laser].classList.remove('laser');
                         htmlGrille[laser].classList.add('boom');

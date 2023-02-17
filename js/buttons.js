@@ -1,6 +1,48 @@
-let audioTheme = new Audio('../ressources/audio/Game-Over.mp3');
+const highScoresDiv = document.querySelector('#highscores');
+const paramsDiv = document.querySelector('#params');
+const allParamsDiv = document.querySelectorAll('#params div ');
+// button parameter
+document.querySelector('#paramsBtn').addEventListener('click', () => {
+    let i = 0;
+    if (paramsDiv.style.display === 'none') {
+        paramsDiv.style.display = 'flex';
+        highScoresDiv.style.display = 'none';
+        skillTreeDiv.style.display = 'none';
+    } else {
+        paramsDiv.style.display = 'none';
+    }
+    document.querySelector('.diff_choice div').style.display =
+        paramsDiv.style.display === 'none' ? 'inline-block' : 'none';
+});
+// button on et off dans l'onglet parameters
+allParamsDiv.forEach((paramsbtnDiv) => {
+    const paramsbtn = paramsbtnDiv.lastChild.previousSibling;
+    paramsbtn.addEventListener('click', () => {
+        if (paramsbtn.textContent === 'On') {
+            paramsbtn.innerHTML = 'Off';
+            paramsbtn.style.backgroundColor = '#cb3c2f';
+            if (paramsbtn.id === 'music') {
+                audioTheme.pause();
+                songOn = false;
+            }
+            if (paramsbtn.id === 'sound-effect') {
+                audioEffect = false;
+            }
+        } else if (paramsbtn.textContent === 'Off') {
+            paramsbtn.innerHTML = 'On';
+            paramsbtn.style.backgroundColor = '#4caf50';
+            if (paramsbtn.id === 'music') {
+                audioTheme.play();
+                songOn = true;
+            }
+            if (paramsbtn.id === 'sound-effect') {
+                audioEffect = true;
+            }
+        }
+    });
+});
 // Boutons de difficulté
-document.querySelectorAll('.diff_choice button').forEach((button) => {
+document.querySelectorAll('.diff_choice div button').forEach((button) => {
     button.addEventListener('click', () => {
         switch (button.id) {
             case 'easy':
@@ -21,11 +63,13 @@ document.querySelectorAll('.diff_choice button').forEach((button) => {
     });
 });
 document.querySelector('#btnScores').addEventListener('click', () => {
+    paramsDiv.style.display = 'none';
+    skillTreeDiv.style.display = 'none';
     const highScores = JSON.parse(scoreStorage.getItem('scores')) ?? [];
+    highScoresDiv.style.display =
+        highScoresDiv.style.display === 'none' ? 'block' : 'none';
     document.querySelector('.diff_choice div').style.display =
-        document.querySelector('.diff_choice div').style.display === 'none'
-            ? 'inline-block'
-            : 'none';
+        highScoresDiv.style.display === 'none' ? 'inline-block' : 'none';
     document.querySelector('#btnScores').innerHTML =
         document.querySelector('.diff_choice div').style.display === 'none'
             ? 'Difficulties'
@@ -33,18 +77,18 @@ document.querySelector('#btnScores').addEventListener('click', () => {
     showAllScores();
     document.querySelector('#highscores #tab-score').style.display =
         highScores.length === 0 ? 'none' : 'table';
-    document.querySelector('#highscores').style.display =
-        document.querySelector('#highscores').style.display === 'none'
-            ? 'block'
-            : 'none';
 });
 document.querySelector('#play').addEventListener('click', () => {
-    audioTheme.play();
+    if (songOn) {
+        audioTheme.play();
+    }
     document.querySelector('#title').style.display = 'none';
     document.querySelector('.diff_choice').style.display = 'flex';
     document.querySelector('#resetSkills').style.display = 'inline-block';
     document.querySelector('#showSkillTree').style.display = 'inline-block';
     document.querySelector('#btnScores').style.display = 'inline-block';
+    document.querySelector('#paramsBtn').style.display = 'inline-block';
+
     document.querySelector('#hardreset').style.display = 'inline-block';
 });
 // Bouton replay
@@ -54,11 +98,14 @@ document.querySelector('#replay').addEventListener('click', () => {
     vaisseau = 390;
     aliens = [];
     dead = false;
-    audioBomb.pause();
-    audioLaser.pause();
-    audioLaserAlien.pause();
-    audioVictory.pause();
-    audioTheme.play();
+    if (songOn) {
+        audioBomb.pause();
+        audioLaser.pause();
+        audioLaserAlien.pause();
+        audioVictory.pause();
+        audioTheme.play();
+    }
+
     song = false;
     while (document.querySelector('.grille').firstChild) {
         document
@@ -72,12 +119,13 @@ document.querySelector('#replay').addEventListener('click', () => {
     document.querySelector('.diff_choice').style.display = 'flex';
     document.querySelector('.game').style.display = 'none';
     document.querySelector('.score').style.display = 'none';
-    document.querySelector('#highscores').style.display = 'none';
+    highScoresDiv.style.display = 'none';
     document.querySelector('.timer').style.display = 'none';
     document.querySelector('#showSkillTree').style.display = 'block';
     document.querySelector('#hardreset').style.display = 'block';
     document.querySelector('#resetSkills').style.display = 'block';
     document.querySelector('#btnScores').style.display = 'inline-block';
+    document.querySelector('#paramsBtn').style.display = 'inline-block';
 
     showAllScores();
     updateSkillPointsCounter();
@@ -155,10 +203,14 @@ document.querySelector('#hardreset').addEventListener('click', () => {
 
 document.querySelector('#showSkillTree').addEventListener('click', () => {
     if (skillTreeDiv.style.display === 'none') {
+        paramsDiv.style.display = 'none';
+        highScoresDiv.style.display = 'none';
         skillTreeDiv.style.display = 'flex';
     } else {
         skillTreeDiv.style.display = 'none';
     }
+    document.querySelector('.diff_choice div').style.display =
+        skillTreeDiv.style.display === 'none' ? 'inline-block' : 'none';
 });
 
 document.querySelector('#resetSkills').addEventListener('click', () => {

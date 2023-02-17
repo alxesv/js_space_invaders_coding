@@ -1,5 +1,15 @@
 let htmlGrille;
 let aliens = [];
+let __DIR__ =
+    window.location.pathname.match('(.*/).*')[1] + 'ressources/audio/';
+let audioVictory = new Audio(__DIR__ + 'Dance.mp3');
+let audioTheme = new Audio(__DIR__ + 'Game_Over.mp3');
+let audioBomb = new Audio(__DIR__ + 'boom.mp3');
+let audioLaser = new Audio(__DIR__ + 'laser.mp3');
+let audioLaserAlien = new Audio(__DIR__ + 'laserAlien.mp3');
+let audioDes = new Audio(__DIR__ + 'desintegration.mp3');
+let audioFreeze = new Audio(__DIR__ + 'theWorld.mp3');
+
 // speed of the aliens (in ms), the lower the faster
 let timeRate;
 // cooldown between each shot (in ms), the lower the faster
@@ -29,7 +39,9 @@ let timeFreeze;
 let timeFreezeOn = false;
 let timeFreezeDuration;
 let superShot;
-
+let songOn = true;
+let audioEffect = true;
+let song = false;
 function inRange(x, min, max) {
     return (x - min) * (x - max) <= 0;
 }
@@ -148,6 +160,9 @@ function gameLoop() {
     let border = false;
     let skipBorder = false;
     let gameInterval = setInterval(() => {
+        if (songOn && song) {
+            audioTheme.play();
+        }
         for (let alien of aliens) {
             if (htmlGrille[alien].getAttribute('data') == 'right') {
                 alienDir = false;
@@ -175,6 +190,11 @@ function gameLoop() {
             clearInterval(gameInterval);
             clearInterval(stopInterval);
             if (aliens.length === 0) {
+                if (songOn) {
+                    audioTheme.pause();
+                    audioVictory.play();
+                }
+
                 score = Math.round(
                     (1000 /
                         parseFloat(
@@ -207,7 +227,8 @@ function gameStart(difficulty, level = 1) {
     document.querySelector('#resetSkills').style.display = 'none';
     document.querySelector('#btnScores').style.display = 'none';
     document.querySelector('.game').style.display = 'block';
-
+    document.querySelector('#params').style.display = 'none';
+    document.querySelector('#paramsBtn').style.display = 'none';
     skillTreeDiv.style.display = 'none';
     switch (difficulty) {
         case 1:

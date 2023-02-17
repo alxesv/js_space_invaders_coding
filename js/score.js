@@ -39,7 +39,8 @@ function showAllScores() {
         let cell1 = document.createElement('td');
         let cell2 = document.createElement('td');
         let text1 = document.createTextNode(`${round}`);
-        let text2 = document.createTextNode(`${score.score}`);
+        let points = score.score === 0 ? 'point' : 'points';
+        let text2 = document.createTextNode(`${score.score} ${points}`);
         cell1.append(text1);
         cell2.append(text2);
         ligne.append(cell1, cell2);

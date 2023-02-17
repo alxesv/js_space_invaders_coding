@@ -70,10 +70,6 @@ document.querySelector('#btnScores').addEventListener('click', () => {
         highScoresDiv.style.display === 'none' ? 'block' : 'none';
     document.querySelector('.diff_choice div').style.display =
         highScoresDiv.style.display === 'none' ? 'inline-block' : 'none';
-    document.querySelector('#btnScores').innerHTML =
-        document.querySelector('.diff_choice div').style.display === 'none'
-            ? 'Difficulties'
-            : 'Highscores';
     showAllScores();
     document.querySelector('#highscores #tab-score').style.display =
         highScores.length === 0 ? 'none' : 'table';
